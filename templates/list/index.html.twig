@@ -1,0 +1,132 @@
+{% extends 'baseback.html.twig' %}
+{% block titreback %} Alpha Fit-List {% endblock %}
+
+{% block bodyback %}
+   <br><br><br>
+    <div class="container-fluid">
+        <div class="card w-100">
+            <div class="card-body p-4">
+                <h5 class="card-title fw-semibold mb-4">Subscribers</h5>
+
+                <!-- Add the download button here -->
+                
+                <div class="table-responsive">
+                <div class="mb-3">
+                        <form action="{{ path('search_admin') }}" method="get" class="d-flex">
+                            <input type="text" name="packName" class="form-control me-2" placeholder="Search by Pack Name" />
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                    <table class="table text-nowrap mb-0 align-middle">
+                        <thead class="text-dark fs-4">
+                            <tr>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Subscription ID</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Pack Name</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Subscriber Name</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Schedule</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Stat</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">User ID</h6>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for abonnement in abonnements %}
+                                <tr>
+                                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{ abonnement.id }}</h6></td>
+                                    <td class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-1">{{ abonnement.npack.nom }}</h6>
+                                        <span class="fw-normal"></span>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <p class="mb-0 fw-normal">{{ abonnement.client.nom }}</p>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="badge bg-secondary rounded-3 fw-semibold"><a href="{{ path("indexadmin", { id: abonnement.client.id}) }}">Check the schedule</a></span>
+                                        </div>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="badge bg-secondary rounded-3 fw-semibold"><a href="{{ path("partype", { userId: abonnement.client.id}) }}">Stat for this month</a></span>
+                                        </div>
+                                    </td>
+                                      <td class="border-bottom-0">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="badge bg-secondary rounded-3 fw-semibold"><a href="{{ path("avis_admin", { id: abonnement.client.id}) }}">Check his avis</a></span>
+                                        </div>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0 fs-4">{{ abonnement.client.id }}</h6>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="pagination justify-content-center">
+    {{ knp_pagination_render(abonnements) }}
+</div>
+                    
+                    <!-- Style amélioré pour le paginateur -->
+                
+
+                </div>
+                <a href="{{ path('excel') }}" class="btn btn-primary mb-3">Download Excel Details</a>
+
+            </div>
+        </div>
+    </div>
+
+   <style>
+ 
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a, .pagination .current {
+    text-decoration: none;
+    padding: 10px;
+    margin: 0 5px;
+    color: #007bff;
+    background-color: #fff; /* Fond blanc */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .current {
+    background-color: #007bff; /* Fond bleu pour la page actuelle */
+    color: #fff;
+}
+
+.pagination .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.pagination span {
+    padding: 10px;
+    margin: 0 5px;
+    color: #555;
+}
+
+</style>
+
+{% endblock %}

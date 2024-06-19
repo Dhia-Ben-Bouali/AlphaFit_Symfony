@@ -1,0 +1,353 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %} Messagerie{% endblock %}
+
+
+ {% block content %}
+ <div class="container">
+<style>
+    /* Style pour les erreurs de formulaire */
+    .form-error-message {
+        color: #dc3545; /* Rouge */
+        font-size: 14px;
+        margin-top: 5px;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Style pour les messages d'erreur spécifiques */
+    
+
+    /* Style pour le champ de formulaire */
+    .form-control-transparent {
+        background-color: transparent;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        padding: 8px;
+        color: #495057;
+        width: 100%;
+    }
+
+    /* Style pour le champ de formulaire en cas d'erreur */
+    .form-control-transparent.error {
+        border-color: #dc3545;
+    }
+
+    /* Animation pour attirer l'attention sur le champ en cas d'erreur */
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+
+    /* Appliquer l'animation en cas d'erreur */
+    .form-control-transparent.error {
+        animation: shake 2.1s ease-in-out;
+    }
+</style>
+
+ <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+						<!--begin::Content wrapper-->
+						
+							<!--begin::Content-->
+							<div id="kt_app_content" class="app-content flex-column-fluid">
+								<!--begin::Content container-->
+								<div id="kt_app_content_container" class="app-container container-xxl">
+									<!--begin::Inbox App - Compose -->
+									<div class="d-flex flex-column flex-lg-row">
+										<!--begin::Sidebar-->
+										<div class="d-none d-lg-flex flex-column flex-lg-row-auto w-100 w-lg-275px" data-kt-drawer="true" data-kt-drawer-name="inbox-aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_inbox_aside_toggle">
+											<!--begin::Sticky aside-->
+											<div class="card card-flush mb-0" data-kt-sticky="true" data-kt-sticky-name="inbox-aside-sticky" data-kt-sticky-offset="{default: false, xl: '100px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-top="100px" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
+												<!--begin::Aside content-->
+												<div class="card-body">
+													<!--begin::Button-->
+                                                    
+													<a href="{{path("sendmessage")}}" class="btn btn-primary fw-bold w-100 mb-8">Send Message</a>
+													<!--end::Button-->
+													<!--begin::Menu-->
+													<div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
+														<!--begin::Menu item-->
+														<div class="menu-item mb-3">
+															<!--begin::acceuil-->
+															<span class="menu-link">
+																<span class="menu-icon">
+																	<!--begin::Svg Icon | path: icons/duotune/abstract/abs024.svg-->
+																	<span class="svg-icon svg-icon-2 me-3">
+																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<path opacity="0.3" d="M7.16973 20.95C6.26973 21.55 5.16972 20.75 5.46972 19.75L7.36973 14.05L2.46972 10.55C1.56972 9.95005 2.06973 8.55005 3.06973 8.55005H20.8697C21.9697 8.55005 22.3697 9.95005 21.4697 10.55L7.16973 20.95Z" fill="currentColor" />
+																			<path d="M11.0697 2.75L7.46973 13.95L16.9697 20.85C17.8697 21.45 18.9697 20.65 18.6697 19.65L13.1697 2.75C12.7697 1.75 11.3697 1.75 11.0697 2.75Z" fill="currentColor" />
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																</span>
+															
+																<span class="menu-title fw-bold"><a href="{{path("app_messagerie")}}">Acceuil</a></span>
+															</span>
+														</div>
+															<!--end::acceuil-->
+															<!--begin::Inbox-->
+														<div class="menu-item mb-3">
+														
+															<span class="menu-link">
+																<span class="menu-icon">
+																	<!--begin::Svg Icon | path: icons/duotune/communication/com010.svg-->
+																	<span class="svg-icon svg-icon-2 me-3">
+																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<path d="M6 8.725C6 8.125 6.4 7.725 7 7.725H14L18 11.725V12.925L22 9.725L12.6 2.225C12.2 1.925 11.7 1.925 11.4 2.225L2 9.725L6 12.925V8.725Z" fill="currentColor" />
+																			<path opacity="0.3" d="M22 9.72498V20.725C22 21.325 21.6 21.725 21 21.725H3C2.4 21.725 2 21.325 2 20.725V9.72498L11.4 17.225C11.8 17.525 12.3 17.525 12.6 17.225L22 9.72498ZM15 11.725H18L14 7.72498V10.725C14 11.325 14.4 11.725 15 11.725Z" fill="currentColor" />
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																</span>
+																
+																<span class="menu-title fw-bold"><a href="{{path("messagesreceived")}}">Inbox</a></span>
+																<span class="badge badge-light-success">{{app.user.received|length}}</span>
+															</span>
+															<!--end::Inbox-->
+														</div>
+														<!--end::Menu item-->
+														<!--begin::Menu item-->
+														<div class="menu-item mb-3">
+															<!--begin::Marked-->
+															<span class="menu-link">
+																<span class="menu-icon">
+																	<!--begin::Svg Icon | path: icons/duotune/abstract/abs024.svg-->
+																	<span class="svg-icon svg-icon-2 me-3">
+																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<path opacity="0.3" d="M7.16973 20.95C6.26973 21.55 5.16972 20.75 5.46972 19.75L7.36973 14.05L2.46972 10.55C1.56972 9.95005 2.06973 8.55005 3.06973 8.55005H20.8697C21.9697 8.55005 22.3697 9.95005 21.4697 10.55L7.16973 20.95Z" fill="currentColor" />
+																			<path d="M11.0697 2.75L7.46973 13.95L16.9697 20.85C17.8697 21.45 18.9697 20.65 18.6697 19.65L13.1697 2.75C12.7697 1.75 11.3697 1.75 11.0697 2.75Z" fill="currentColor" />
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																</span>
+															     <span class="menu-title fw-bold"><a href="{{path("messagesmarked")}}">Marked</a></span>
+															</span>
+															<!--end::Marked-->
+														</div>
+														<!--end::Menu item-->
+														<!--begin::Menu item-->
+														
+														<!--end::Menu item-->
+
+														<!--begin::Menu item-->
+														<div class="menu-item mb-3">
+															<!--begin::Sent-->
+															<span class="menu-link">
+																<span class="menu-icon">
+																	<!--begin::Svg Icon | path: icons/duotune/general/gen016.svg-->
+																	<span class="svg-icon svg-icon-2 me-3">
+																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<path d="M15.43 8.56949L10.744 15.1395C10.6422 15.282 10.5804 15.4492 10.5651 15.6236C10.5498 15.7981 10.5815 15.9734 10.657 16.1315L13.194 21.4425C13.2737 21.6097 13.3991 21.751 13.5557 21.8499C13.7123 21.9488 13.8938 22.0014 14.079 22.0015H14.117C14.3087 21.9941 14.4941 21.9307 14.6502 21.8191C14.8062 21.7075 14.9261 21.5526 14.995 21.3735L21.933 3.33649C22.0011 3.15918 22.0164 2.96594 21.977 2.78013C21.9376 2.59432 21.8452 2.4239 21.711 2.28949L15.43 8.56949Z" fill="currentColor" />
+																			<path opacity="0.3" d="M20.664 2.06648L2.62602 9.00148C2.44768 9.07085 2.29348 9.19082 2.1824 9.34663C2.07131 9.50244 2.00818 9.68731 2.00074 9.87853C1.99331 10.0697 2.04189 10.259 2.14054 10.4229C2.23919 10.5869 2.38359 10.7185 2.55601 10.8015L7.86601 13.3365C8.02383 13.4126 8.19925 13.4448 8.37382 13.4297C8.54839 13.4145 8.71565 13.3526 8.85801 13.2505L15.43 8.56548L21.711 2.28448C21.5762 2.15096 21.4055 2.05932 21.2198 2.02064C21.034 1.98196 20.8409 1.99788 20.664 2.06648Z" fill="currentColor" />
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																</span>
+																
+														<span class="menu-title fw-bold"><a href="{{path("messagessent")}}">Sent</a></span>
+														<span class="badge badge-light-success">{{app.user.sent|length}}</span>
+
+															</span>
+															<!--end::Sent-->
+														</div>
+														<!--end::Menu item-->
+														
+													</div>
+													<!--end::Menu-->
+													
+												</div>
+												<!--end::Aside content-->
+											</div>
+											<!--end::Sticky aside-->
+										</div>
+										<!--end::Sidebar-->
+		<!---begin::Content-->
+										<div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
+											<!--begin::Card-->
+											<div class="card">
+												<div class="card-header align-items-center">
+													<div class="card-title">
+														<h2>Compose Message</h2>
+													</div>
+												</div>
+												<div class="card-body p-0">
+													<!--begin::Form-->
+													<div id="kt_inbox_compose_form">
+													  {{ form_start(form, {'attr': {'method': 'post', 'action': path('sendmessage'), 'novalidate': 'novalidate'}}) }}
+
+														<!--begin::Body-->
+														<div class="d-block">
+															<!--begin::To-->
+															<div class="d-flex align-items-center border-bottom px-8 min-h-50px">
+																<!--begin::Label-->
+																<div class="text-dark fw-bold w-75px">To:</div>
+																<!--end::Label-->
+																<!--begin::Input-->
+																 {{ form_widget(form.recipient, {'attr': {'class': 'form-control form-control-transparent border-0', 'placeholder': 'TO ?'}}) }}
+																 
+																<!--end::Input-->
+																<!--begin::CC & BCC buttons-->
+																<div class="ms-auto w-75px text-end">
+																	<span class="text-muted fs-bold cursor-pointer text-hover-primary me-2" data-kt-inbox-form="cc_button">Cc</span>
+																	<span class="text-muted fs-bold cursor-pointer text-hover-primary" data-kt-inbox-form="bcc_button">Bcc</span>
+																</div>
+																<!--end::CC & BCC buttons-->
+															</div>
+															
+															<!--end::To-->
+															<!--begin::CC-->
+															<div class="d-none align-items-center border-bottom ps-8 pe-5 min-h-50px" data-kt-inbox-form="cc">
+																<!--begin::Label-->
+																<div class="text-dark fw-bold w-75px">Cc:</div>
+																<!--end::Label-->
+																<!--begin::Input-->
+																<input type="text" class="form-control form-control-transparent border-0" name="compose_cc" value="" data-kt-inbox-form="tagify" />
+																<!--end::Input-->
+																<!--begin::Close-->
+																<span class="btn btn-clean btn-xs btn-icon" data-kt-inbox-form="cc_close">
+																	<i class="la la-close"></i>
+																</span>
+																<!--end::Close-->
+															</div>
+															<!--end::CC-->
+															<!--begin::BCC-->
+															<div class="d-none align-items-center border-bottom inbox-to-bcc ps-8 pe-5 min-h-50px" data-kt-inbox-form="bcc">
+																<!--begin::Label-->
+																<div class="text-dark fw-bold w-75px">Bcc:</div>
+																<!--end::Label-->
+																<!--begin::Input-->
+																<input type="text" class="form-control form-control-transparent border-0" name="compose_bcc" value="" data-kt-inbox-form="tagify" />
+																<!--end::Input-->
+																<!--begin::Close-->
+																<span class="btn btn-clean btn-xs btn-icon" data-kt-inbox-form="bcc_close">
+																	<i class="la la-close"></i>
+																</span>
+																<!--end::Close-->
+															</div>
+															
+															<!--end::BCC-->
+															<!--begin::Subject-->
+															<div class="border-bottom">
+
+															 {{ form_widget(form.titre, {'attr': {'class': 'form-control form-control-transparent border-0 px-8 min-h-45px', 'placeholder': 'Subject '}}) }}
+                                                             <div class="form-error-message for-contenu">
+															 {{form_errors(form.titre)}}
+															 </div>
+															</div>
+															
+															
+															<!--end::Subject-->
+															
+															<!--begin::Message-->
+															<div id="kt_inbox_form_editor" class="bg-transparent border-0 h-200px px-3">
+													          {{ form_widget(form.contenu, {'attr': {'class': 'form-control form-control-transparent border-0 px-8 min-h-45px', 'placeholder': 'Write Here'}}) }}
+															 
+															</div>
+															<div class="form-error-message for-contenu">
+																	{{ form_errors(form.contenu) }}
+																</div>
+																												<!--end::Message-->
+
+																												
+														<div class="d-flex flex-wrap gap-2 py-5 ps-8 pe-5 border-top">
+																<!--begin::Label-->
+																<div class=" fw-bold w-320px">To consider the message as marked, check this box </div>
+																<!--end::Label-->
+																<!--begin::Input-->
+																 {{ form_widget(form.is_favorite, {'attr': {'class': ' border-0', 'placeholder': 'TO ?'}}) }}
+																 
+																<!--end::Input-->
+									
+															</div>
+											
+														</div>
+														<!--end::Body-->
+														<!--begin::Footer-->
+														<div class="d-flex flex-stack flex-wrap gap-2 py-5 ps-8 pe-5 border-top">
+															<!--begin::Actions-->
+															<div class="d-flex align-items-center me-3">
+																<!--begin::Send-->
+																<div class="btn-group me-4">
+																	<!--begin::Submit-->
+															     	 {{ form_widget(form.send, {'attr': {'class': 'btn btn-primary fs-bold px-6 form-control-transparent border-0 px-8 min-h-45px', 'placeholder': 'Send '}}) }}
+																	 
+																	<!--end::Submit-->
+																	 
+
+																	<!--begin::Send options-->
+																	
+																	<!--end::Send options-->
+																</div>
+																<div class="btn-group me-4">
+																	<!--begin::Submit-->
+															     	 {{ form_widget(form.reset, {'attr': {'class': 'btn btn-primary fs-bold px-6 form-control-transparent border-0 px-8 min-h-45px', 'placeholder': 'Send '}}) }}
+																	 
+																	<!--end::Submit-->
+																	 
+
+																	<!--begin::Send options-->
+																	
+																	<!--end::Send options-->
+																</div>
+																  {{ form_end(form) }}
+																		
+																<!--end::Send-->
+																
+																
+																
+															</div>
+															<!--end::Actions-->
+															<!--begin::Toolbar-->
+															<div class="d-flex align-items-center">
+																<!--begin::More actions-->
+																
+																<!--end::More actions-->
+																<!--begin::Dismiss reply-->
+																<span class="btn btn-icon btn-sm btn-clean btn-active-light-primary" data-inbox="dismiss" data-toggle="tooltip" title="Dismiss reply">
+																	<!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+																	<span class="svg-icon svg-icon-2">
+																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor" />
+																			<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor" />
+																			<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor" />
+																		</svg>
+																	</span>
+																	</a>
+																	<!--end::Svg Icon-->
+																</span>
+																<!--end::Dismiss reply-->
+															</div>
+															<!--end::Toolbar-->
+														</div>
+														<!--end::Footer-->
+													</div>
+													<!--end::Form-->
+												</div>
+											</div>
+											<!--end::Card-->
+										</div>
+										<!--end::Content-->
+									</div>
+									<!--end::Inbox App - Compose -->
+								</div>
+								<!--end::Content container-->
+				
+ 
+
+  
+
+
+
+
+ <br>
+
+
+ </div>
+ 
+
+{% endblock %}
+
+

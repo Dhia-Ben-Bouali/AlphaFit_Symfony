@@ -1,0 +1,202 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <html lang="en">
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/styleshop.css">
+        <script src="{{ asset('script.js') }}"></script>
+        <style>
+            .card2 {
+                position: relative;
+                display: inline-block;
+            }
+
+            .product-image {
+                width: 200px; /* Ajustez la taille de l'image selon vos besoins */
+            }
+
+            .description-tooltip {
+                visibility: hidden;
+                width: 200px;
+                background-color:  rgba(255, 255, 255, 0.89);
+                color: blue;
+                text-align: center;
+                padding: 5px;
+                border-radius: 50px;
+                position: absolute;
+                z-index: 1;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+            .card2:hover .description-tooltip {
+                visibility: visible;
+                opacity: 1;
+            }
+            .custom-form-container {
+                text-align: right; /* Aligner le contenu du conteneur à droite */
+            }
+
+            .custom-form {
+                display: inline-block;
+            }
+
+            .custom-form input[type="text"] {
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                margin-right: 5px;
+                font-size: 14px;
+            }
+
+            .custom-form button {
+                padding: 8px 15px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-right: 20px;
+                margin-top:20px;
+                font-size: 14px;
+            }
+
+            .custom-form button:hover {
+                background-color: #0056b3;
+            }
+            #searchInput {
+                width: 300px; /* Définir une largeur appropriée */
+                padding: 10px; /* Ajouter un espace autour du texte */
+                font-size: 16px; /* Taille de la police */
+                border: 2px solid #ccc; /* Ajouter une bordure */
+                border-radius: 5px; /* Ajouter des coins arrondis */
+                outline: none;
+                margin-top:20px;
+                margin-left:80%;/* Supprimer la bordure bleue lors du focus */
+            }
+
+            /* Ajouter des styles lorsque la zone de texte est en focus */
+            #searchInput:focus {
+                border-color: #007bff; /* Changement de couleur de la bordure */
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Ajouter une ombre */
+            }
+            .custom-input {
+                height: 35px; /* Vous pouvez ajuster la hauteur en fonction de vos besoins */
+            }
+            .qr-code {
+                margin-left: 25px; /* Ajoute une marge de 20 pixels à gauche */
+            }
+            .qr-code-product {
+                visibility: hidden; /* Masquer le QR code par défaut */
+            }
+
+            .card2:hover .qr-code-product {
+                visibility: visible; /* Rendre le QR code visible lorsqu'on survole la carte */
+            }
+
+        </style>
+
+    </head>
+
+
+
+
+    <body>
+    <input type="checkbox" id="check" name="check">
+
+
+    <div class="panier-slider ">
+
+        <h2>My Package</h2>
+        <hr>
+    </div>
+
+
+
+    <div class="slider ">
+        <img src="uploads/images/img/sport-alimentation-couverture.jpg">
+        <div class="text-img ">
+            <h1 class="T1 ">Welcome to Our <span class="x2 ">Online-Store</span>!
+
+
+
+        </div>
+
+
+
+    </div>
+
+    <div class="d-flex justify-content-end mt-3"> <!-- Utilisation de flexbox pour aligner le formulaire à droite -->
+
+        <form action="{{ path('app_shop') }}" method="get">
+            <!-- Ajoutez la classe personnalisée à votre zone de texte -->
+            <input type="text" name="searchLetter" id="searchLetter" class="custom-input ms-10">
+            <!-- Utilisation de la classe 'btn btn-primary' pour styliser le bouton en bleu -->
+            <input type="submit" value="Rechercher" class="btn btn-primary">
+        </form>
+    </div>
+    <div class="items ">
+        <h2 class="men ">Produtcs</h2>
+
+
+
+        <div class="carousel-inner text-center">
+            {% for produit in produits %}
+                <div class="card2 mx-auto me-10" data-description="{{ produit.description }}">
+                    <a href="{{ path('product_show', { 'id': produit.id }) }}">
+                        <img src="{{ asset('uploads/images/' ~ produit.image) }}" class="product-image mx-auto d-block mb-0" >
+                    </a>
+                    <p>{{ produit.prix }}DT</p>
+                    <a href="{{ path('product_show', { 'id': produit.id }) }}">{{ produit.nom }}</a>
+                    <div class="add-to-cart-container">
+                        <img src="{{ qr_code_data_uri(absolute_url(path('product_show', {'id': produit.id}))) }}" alt="QR Code for product" width="90" class="qr-code-product">
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Placez d'abord l'image du QR code -->
+        <div class="text">
+            <img src="{{ qr_code_data_uri(absolute_url(path('catalog_generate_pdf'))) }}" alt="QR Code for product" width="90" class="qr-code">
+        </div>
+
+        <!-- Ensuite, ajoutez le bouton de téléchargement de PDF -->
+        <div class="text mt-3"> <!-- Ajout d'une marge supérieure pour l'espacement -->
+            <a href="{{ path('catalog_generate_pdf') }}" class="btn btn-primary">Télécharger le PDF</a>
+        </div>
+
+    </div>
+    </body>
+
+    </html>
+{% endblock %}
+{% block js %}
+    <!-- Assurez-vous d'inclure jQuery avant ce script -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#searchInput').on('input', function() {
+                var searchText = $(this).val().toLowerCase(); // Récupérer le texte de recherche et le convertir en minuscules
+                $('.card2').each(function() { // Parcourir chaque carte de produit
+                    var description = $(this).data('description').toLowerCase(); // Récupérer la description du produit et la convertir en minuscules
+                    if (description.includes(searchText)) { // Vérifier si la description du produit contient le texte de recherche
+                        $(this).show(); // Afficher la carte si elle correspond
+                    } else {
+                        $(this).hide(); // Masquer la carte sinon
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

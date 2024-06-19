@@ -1,0 +1,191 @@
+
+{% extends 'baseback.html.twig' %}
+{% block css %}
+    <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('media/logos/alphalogo.png')}}" />
+    <link rel="stylesheet" href="{{ asset('/css/styles.min.css')}}" />
+    <style>   
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+    button {
+            background-color: #007bff;
+            border: 1px solid transparent;
+            color: #fff;
+            padding: .75rem 1.5rem; 
+            font-size: 1.2rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+            cursor: pointer;
+    }
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+    .delete-button {
+        background-color: #ff6347;
+        color: #fff; 
+        border: none; 
+        padding: 6px 12px;
+        border-radius: 3px; 
+        cursor: pointer; 
+        font-size: 14px; 
+        transition: background-color 0.3s ease; 
+    }
+    .delete-button:hover {
+        background-color: #cc0000; 
+    }
+    .div-a-masquer {
+            display: none;
+    }
+
+    </style>
+{% endblock %}
+
+{% block bodyback %}
+
+        <!--end::Header container-->
+    <div class="card mb-5 mb-xl-8">
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{message}}
+        </div>
+        {% endfor %}
+        <!--begin::Header-->
+        <div class="card-header border-0 pt-5" style="margin-top: 50px">
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-title fw-semibold">Reclamation List</span>
+            </h3>
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="card-body py-3" >
+            <!--begin::Table container-->
+            <div class="d-flex flex-center flex-column-fluid pb-15 pb-lg-20">
+                <form class="form w-100" novalidate="novalidate" method="post">
+                {{ form_start(reclamationForm,{'attr': {'novalidate': 'novalidate'}} ) }}
+                <!--begin::Heading-->
+                <div class="text-center mb-11">
+                    <!--begin::Title-->
+                    <h1 class="text-dark fw-bolder mb-3">Edit Reclamation</h1>
+                    <!--end::Title-->
+                </div>
+                <!--end::Heading-->
+                <!-- Fields in the same line -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        {{ form_label(reclamationForm.date, 'Date', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(reclamationForm.date, {'attr': {'class': 'form-control', 'placeholder': 'Date', 'required': 'required'}}) }}
+                        {{ form_errors(reclamationForm.date , {'abel_attr': {'class': 'form-label'}}) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(reclamationForm.etat, 'Etat', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(reclamationForm.etat, {'attr': {'class': 'form-control', 'placeholder': 'Etat' , 'required': 'required'}}) }}
+                        <div class="error-message">{{ form_errors(reclamationForm.etat, {'abel_attr': {'class': 'form-label'}}) }}</div>
+                    </div>
+                </div>
+                <div class="row g-3 mb-4">
+                    <div class="div-a-masquer">
+                        {{ form_label(reclamationForm.recuser, 'Id user', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(reclamationForm.recuser, {'attr': {'class': 'form-control', 'placeholder': 'Id user'}}) }}
+                        <div class="error-message">{{ form_errors(reclamationForm.recuser,  {'abel_attr': {'class': 'form-label'}}) }}</div>
+                    </div>
+                    </div>
+                    <!-- Fields on the third line with minimized height -->
+                    <div class="row g-3 mb-4">
+                        <div class="">
+                            {{ form_label(reclamationForm.contenu, 'Contenu', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(reclamationForm.contenu, {'attr': {'class': 'form-control', 'placeholder': 'Contenu', 'rows': '5', 'required': 'required'}}) }}
+                            <div class="error-message">{{ form_errors(reclamationForm.contenu,  {'abel_attr': {'class': 'form-label'}}) }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_end(reclamationForm) }}
+                    </div>
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Table container-->
+        </div>
+        <!-- Modal -->
+        <!--begin::Modal - Add task-->
+        <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_user_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bold">Add User</h2>
+                        <!--end::Modal title-->
+
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+        </div>
+        <!--end::Modal - Add task-->
+        <!--begin::Body-->
+        <!-- Edit Profile Modal -->
+        <div class="modal fade" id="AddUserModal" tabindex="-1" aria-labelledby="AddUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AddUserModalLabel">Edit Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Modal Body with the form -->
+                    <div class="modal-body">
+                        <span id="userId"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block jsback %}
+    <script src="{{ asset('/plugins/global/plugins.bundle.js')}}"></script>
+    <script src="{{ asset('/js/scripts.bundle.js')}}"></script>
+    <!--end::Global Javascript Bundle-->
+
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('/js/custom/landing.js')}}"></script>
+    <script src="{{ asset('js/custom/pages/pricing/general.js')}}"></script>
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <!--end::Vendors Javascript-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('js/custom/pages/user-profile/general.js')}}"></script>
+    <script src="{{ asset('js/widgets.bundle.js')}}"></script>
+    <script src="{{ asset('js/custom/widgets.js')}}"></script>
+    <script src="{{ asset('js/custom/apps/chat/chat.js')}}"></script>
+    <script src="{{ asset('js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        
+
+
+    <script src="{{ asset('/libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{ asset('/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('/js/sidebarmenu.js')}}"></script>
+    <script src=".{{ asset('/js/app.min.js')}}"></script>
+    <script src="{{ asset('/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{ asset('/libs/simplebar/dist/simplebar.js')}}"></script>
+    <script src="{{ asset('/js/dashboard.js')}}"></script>
+{% endblock %}

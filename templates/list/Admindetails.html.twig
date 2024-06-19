@@ -1,0 +1,111 @@
+{% extends 'baseback.html.twig' %}
+{% block titreback %} Alpha Fit-Details {% endblock %}
+
+
+
+
+
+
+
+{% block bodyback %}
+
+
+
+   <br><br><br>
+    <div class="container-fluid">
+
+        
+                
+                   
+                
+                    <div class="card w-100">
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-semibold mb-4">Details</h5>
+                            <div class="table-responsive">
+                                <table class="table text-nowrap mb-0 align-middle">
+                                    
+                                    <tbody>
+                                     <tr>
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-1">Member ID </h6>
+                                            <span class="fw-normal"></span>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">{{details.user.id}}</p>
+                                        </td>
+                                
+                                    </tr>
+                                    <tr>
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-1">Member Name </h6>
+                                            <span class="fw-normal"></span>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">{{details.user.nom}}</p>
+                                        </td>
+                                
+                                    </tr>
+                                      <tr>
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-1">Member Last Name </h6>
+                                            <span class="fw-normal"></span>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">{{details.user.prenom}}</p>
+                                        </td>
+                                
+                                    </tr>
+
+                                    <tr>
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-1">Title</h6>
+                                            <span class="fw-normal"></span>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">{{details.title}}</p>
+                                        </td>
+                                
+                                    </tr>
+                                     <tr>
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-1">Description</h6>
+                                            <span class="fw-normal"></span>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">{{details.description}}</p>
+                                        </td>
+                                
+                                    </tr>
+                                     <tr>
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-1">Start Date && Time</h6>
+                                            <span class="fw-normal"></span>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">{{details.start|date('Y-m-d H:i:s')}}</p>
+                                        </td>
+                                
+                                    </tr>
+                                     <tr>
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-1">End Date && Time</h6>
+                                            <span class="fw-normal"></span>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">{{details.end|date('Y-m-d H:i:s')}}</p>
+                                        </td>
+                                
+                                    </tr>
+                                    
+                                    
+                                  
+                                    </tbody>
+									
+                                </table>
+                            </div>
+                     </div>
+         </div>
+     </div>
+
+
+{% endblock %}

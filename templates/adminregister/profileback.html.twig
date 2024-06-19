@@ -1,0 +1,112 @@
+
+{% extends 'baseback.html.twig' %}
+{% block css %}
+    <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('media/logos/alphalogo.png')}}" />
+    <link rel="stylesheet" href="{{ asset('css/styles.min.css')}}" />
+{% endblock %}
+
+{% block bodyback %}
+<div class="container-fluid mt-5">
+    <div class="bg-white p-4 rounded mb-4">
+        <!--begin::details View-->
+        <div class="card mb-5 mb-xl-10 " id="kt_profile_details_view" style="margin-top: 120px ; margin-left: 150px; margin-right: 150px ; box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.1);">
+            <!--begin::Card header-->
+            <div class="card-header cursor-pointer">
+                <!--begin::Card title-->
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">Profile Details</h3>
+                </div>
+                <!--end::Card title-->
+
+            </div>
+            <!--begin::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body p-9">
+                <!--begin::Row-->
+                <div class="row mb-7">
+                    <!--begin::Label-->
+                    <label class="col-lg-4 fw-semibold text-muted" >Full Name</label>
+                    <!--end::Label-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8">
+                        <span class="fw-bold fs-6 text-gray-800">{{ app.user.nom ~ ' ' ~ app.user.prenom }}</span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Row-->
+                <!--begin::Input group-->
+                <div class="row mb-7">
+                    <!--begin::Label-->
+                    <label class="col-lg-4 fw-semibold text-muted">Adresse</label>
+                    <!--end::Label-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-semibold text-gray-800 fs-6">{{ app.user.adresse }}</span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Input group-->
+
+                <!--end::Input group-->
+                <!--begin::Input group-->
+                <div class="row mb-7">
+                    <!--begin::Label-->
+                    <label class="col-lg-4 fw-semibold text-muted">Email</label>
+                    <!--end::Label-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8">
+                        <span class="fw-bold fs-6 text-gray-800">{{ app.user.email }}</span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Input group-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::details View-->
+    </div>
+    <!-- Edit Profile Modal -->
+
+
+</div>
+{% endblock %}
+{% block jsback %}
+    <script src="{{ asset('/plugins/global/plugins.bundle.js')}}"></script>
+    <script src="{{ asset('/js/scripts.bundle.js')}}"></script>
+    <!--end::Global Javascript Bundle-->
+
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('/js/custom/landing.js')}}"></script>
+    <script src="{{ asset('js/custom/pages/pricing/general.js')}}"></script>
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <!--end::Vendors Javascript-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('js/custom/pages/user-profile/general.js')}}"></script>
+    <script src="{{ asset('js/widgets.bundle.js')}}"></script>
+    <script src="{{ asset('js/custom/widgets.js')}}"></script>
+    <script src="{{ asset('js/custom/apps/chat/chat.js')}}"></script>
+    <script src="{{ asset('js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="{{ asset('/plugins/global/plugins.bundle.js')}}"></script>
+    <script src="{{ asset('/js/scripts.bundle.js')}}"></script>
+    <!--end::Global Javascript Bundle-->
+
+
+
+
+    <script src="{{ asset('libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('js/sidebarmenu.js')}}"></script>
+    <script src=".{{ asset('js/app.min.js')}}"></script>
+    <script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{ asset('libs/simplebar/dist/simplebar.js')}}"></script>
+    <script src="{{ asset('js/dashboard.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+
+{% endblock %}

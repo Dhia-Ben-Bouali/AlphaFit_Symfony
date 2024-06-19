@@ -1,0 +1,51 @@
+{# templates/service/new.html.twig #}
+
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Add Package{% endblock %}
+
+{% block body %}
+    <h1>Add Package</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.nom) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.prix) }}
+    {{ form_widget(form.service) }}
+
+    <button type="submit">Submit</button>
+
+    {{ form_end(form) }}
+{% endblock %}
+#}
+{% extends 'pack/show_all.html.twig' %}
+{% block add %}
+<a href="#" class="btn btn-sm btn-primary align-self-center" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body with the form -->
+            <div class="modal-body">
+
+                {{ form_start(form) }}
+
+                {{ form_row(form.nom) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.prix) }}
+                {{ form_widget(form.service) }}
+
+                <button type="submit">Submit</button>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Package Details{% endblock %}
+
+{% block css %}
+    {{ parent() }} {# Include the styles from the parent template #}
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .package-details-container {
+            max-width: 800px;
+            margin: 50px auto; /* Adjusted margin */
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative; /* Set position to relative */
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .no-services {
+            color: #999;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-list-btn {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-to-list-btn a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block bodyback %}
+    <div class="package-details-container">
+        <h1>Package Details</h1>
+
+        <p><strong>Name: {{ pack.nom }}</strong></p>
+        <p><strong>Description: </strong>{{ pack.description }}</p>
+        <p><strong>Price: </strong>{{ pack.prix }}</p>
+        {% if pack.service is not empty %}
+            <h2>Associated Services</h2>
+            <ul>
+                {% for service in pack.service %}
+                    <li>{{ service.nom }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-services">No services associated with this pack.</p>
+        {% endif %}
+        <div class="back-to-list-btn">
+            <a href="{{ path('show_all_pack') }}">Back to List</a>
+        </div>
+    </div>
+{% endblock %}

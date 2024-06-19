@@ -1,0 +1,42 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+# app/config/services.yaml
+parameters:
+# config/services.yaml
+    images_directory: '%kernel.project_dir%/public/uploads/images'
+    pdf_generation_timeout: 90 # Augmentation du délai à 90 secondes
+    stripe_secret_key: '%env(STRIPE_SECRET_KEY)%'
+    stripe_public_key: '%env(STRIPE_PUBLIC_KEY)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true
+    App\Controller\RegistrationController: ~
+    App\Service\OpenWeatherMapService:
+        arguments:
+            $httpClient: '@http_client'
+            $apiKey: '%env(OPENWEATHERMAP_API_KEY)%'
+            
+    Knp\Snappy\Pdf:
+        arguments:
+            $binary:  "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+
+            
+        # Automatically registers your services as commands, event subscribers, etc.
+# this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Entity\Article:
+        arguments: [ ]

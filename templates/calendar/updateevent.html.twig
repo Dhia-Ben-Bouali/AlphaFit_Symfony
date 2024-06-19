@@ -1,0 +1,275 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add to calendar{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <!-- Ajoutez ici vos liens CSS personnalisés si nécessaire -->
+{% endblock %}
+               
+{% block content %}
+<style>
+   .form-error-message {
+        color: #dc3545; /* Rouge */
+        font-size: 14px;
+        margin-top: 5px;
+        font-family: 'Arial', sans-serif;
+    }
+
+</style>
+<div class="card mx-auto col-md-6">
+    <!--begin::Header-->
+    <div class="card-header card-header-stretch">
+        <!--begin::Title-->
+        <div class="card-title">
+            <h3 class="m-0 text-gray-800">Add to calendar</h3>
+        </div>
+        <!--end::Title-->
+    </div>
+    <!--end::Header-->
+    <!--begin::Tab Content-->
+    <div id="kt_referred_users_tab_content" class="tab-content">
+      <div  class="form container-lg" >
+{{ form_start(form, {'attr': {'method': 'post', 'action': path('updateevent', {'id': id, 'idevent': idevent}), 'novalidate': 'novalidate'}}) }}
+
+					<!--begin::Modal header-->
+					<div class="modal-header">
+						<!--begin::Modal title-->
+						<h2 class="fw-bold" data-kt-calendar="title"></h2>
+						<!--end::Modal title-->
+						<!--begin::Close-->
+						<div class="btn btn-icon btn-sm btn-active-icon-primary" id="kt_modal_add_event_close">
+							<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+							<span class="svg-icon svg-icon-1">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+								</svg>
+							</span>
+							<!--end::Svg Icon-->
+						</div>
+						<!--end::Close-->
+					</div>
+					<!--end::Modal header-->
+					<!--begin::Modal body-->
+					<div class="modal-body py-10 px-lg-17">
+						<!--begin::Input group-->
+						<div class="fv-row mb-9">
+							<!--begin::Label-->
+                            <label class="fs-6 fw-semibold mb-2">{{form_label(form.title)}}</label>
+
+							<!--end::Label-->
+							<!--begin::Input-->
+							{{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Title'}}) }}
+                           <div class="form-error-message for-contenu">
+                            {{form_errors(form.title)}}
+                            </div>
+
+							<!--end::Input-->
+						</div>
+						<!--end::Input group-->
+						<!--begin::Input group-->
+						<div class="fv-row mb-9">
+							<!--begin::Label-->
+							<label class="fs-6 fw-semibold mb-2">{{form_label(form.description)}}</label>
+							<!--end::Label-->
+							<!--begin::Input-->
+							{{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Add description'}}) }}	
+                            <div class="form-error-message for-contenu">
+                            {{form_errors(form.description)}}
+                            </div>
+                            
+                            						<!--end::Input-->
+						</div>
+						<!--end::Input group-->
+
+                            <!--begin::Input group-->
+						<div class="row row-cols-lg-2 g-10">
+							<div class="col" data-kt-calendar="datepicker">
+								<div class="fv-row mb-9">
+									<!--begin::Label-->
+									<label class="fs-6 fw-semibold mb-2 required">{{form_label(form.plan_coach)}}</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+                                    
+									{{ form_widget(form.plan_coach, {'attr': {'class': 'form-control-transparent border-0'}}) }}
+                                    {{form_errors(form.plan_coach)}}
+                                    
+									<!--end::Input-->
+								</div>
+							</div>
+							<div class="col" data-kt-calendar="datepicker">
+								<div class="fv-row mb-9">
+									<!--begin::Label-->
+                                    <label class="fs-6 fw-semibold mb-2 required">{{form_label(form.plan_nutritionniste)}}</label>
+
+									<!--end::Label-->
+									<!--begin::Input-->
+									{{ form_widget(form.plan_nutritionniste, {'attr': {'class': 'form-control-transparent border-0'}}) }}
+                                    {{form_errors(form.plan_nutritionniste)}}
+									<!--end::Input-->
+								</div>
+							</div>
+
+						</div>
+
+						<!--begin::Input group-->
+						 
+						<!--end::Input group-->
+						<!--begin::Input group-->
+						<div class="fv-row mb-9">
+							<!--begin::Checkbox-->
+							<label class="form-check form-check-custom form-check-solid">
+							{{ form_widget(form.all_day, {'attr': {'class': 'form-control-transparent border-0', 'placeholder': 'Adresse'}}) }}
+								<span class="form-check-label fw-semibold" for="kt_calendar_datepicker_allday">{{form_label(form.all_day)}}
+                                {{form_errors(form.all_day)}}
+                                </span>
+							</label>
+							<!--end::Checkbox-->
+						</div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                                <!--begin::Input group-->
+						<div class="row row-cols-lg-2 g-10">
+							
+							<div class="col" data-kt-calendar="datepicker">
+								<div class="fv-row mb-9">
+									<!--begin::Label-->
+                                    <label class="fs-6 fw-semibold mb-2 required">Start Date && Time</label>
+
+									<!--end::Label-->
+									<!--begin::Input-->
+                                    <div class="form-control form-control-solid">
+									{{ form_widget(form.start, {'attr': {'class': 'form-control-transparent border-0'}}) }}
+                                    
+                                    </div>
+									<!--end::Input-->
+                                    	<div class="form-error-message for-contenu">
+
+                                     {{form_errors(form.start)}}
+                                     </div>
+								</div>
+                               
+							</div>
+                            <div class="col" data-kt-calendar="datepicker">
+								<div class="fv-row mb-9">
+									<!--begin::Label-->
+                                    <label class="fs-6 fw-semibold mb-2 required">End Date && Time</label>
+
+									<!--end::Label-->
+									<!--begin::Input-->
+                                    <div class="form-control form-control-solid">
+									{{ form_widget(form.end, {'attr': {'class': 'form-control-transparent border-0'}}) }}
+                                    
+                                    </div>
+									<!--end::Input-->
+                                    <div class="form-error-message for-contenu">
+                                    {{form_errors(form.end)}}
+                                    
+                                    </div>
+								</div>
+							</div>
+
+						</div>
+						<!--end::Input group-->
+						<!--begin::Input group-->
+						
+						
+						<div class="fv-row mb-9">
+							<!--begin::Label-->
+							<label class="fs-6 fw-semibold mb-2">{{form_label(form.background_colar)}}</label>
+							<!--end::Label-->
+							<!--begin::Input-->
+							{{ form_widget(form.background_colar, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+                            {{form_errors(form.background_colar)}}
+							<!--end::Input-->
+						</div>
+						<div class="fv-row mb-9">
+							<!--begin::Label-->
+							<label class="fs-6 fw-semibold mb-2">{{form_label(form.border_color)}} </label>
+							<!--end::Label-->
+							<!--begin::Input-->
+							{{ form_widget(form.border_color, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+                            {{form_errors(form.border_color)}}
+							<!--end::Input-->
+						</div>
+						<div class="fv-row mb-9">
+							<!--begin::Label-->
+							<label class="fs-6 fw-semibold mb-2">{{form_label(form.text_color)}}</label>
+							<!--end::Label-->
+							<!--begin::Input-->
+							{{ form_widget(form.text_color, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+                            {{form_errors(form.text_color)}}
+							<!--end::Input-->
+						</div>
+						
+						
+
+						<!--end::Input group-->
+					</div>
+					
+					
+					<!--end::Modal body-->
+					<!--begin::Modal footer-->
+					<div class="modal-footer flex-center">
+						<!--begin::Button-->
+						
+                        {{ form_widget(form.reset, {'attr': {'class': 'modal-footer flex-center btn btn-light me-3 ', 'placeholder': 'Send '}}) }}
+						<!--end::Button-->
+						<!--begin::Button-->
+						
+							<span class="indicator-label">  {{ form_widget(form.update, {'attr': {'class': 'btn btn-primary btn btn-light me-3 ', 'placeholder': 'Send '}}) }}
+                            </span>
+
+							<span class="indicator-progress">Please wait...
+							<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+						
+						<!--end::Button-->
+					</div>
+                    <div class="fv-row mb-9">
+							<!--begin::Label-->
+							<label class="fs-6 fw-semibold mb-2"></label>
+							<!--end::Label-->
+							<!--begin::Input-->
+							
+							<!--end::Input-->
+						</div>
+						
+
+					<!--end::Modal footer-->
+                                        
+                    </div>
+                    {{ form_end(form) }}
+                    </div>
+                                    <!--end::Form-->
+                        <!--end::Tab Content-->
+</div>
+{% endblock %}
+
+
+
+   
+
+       
+
+{% block js %}
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="{{ asset('/plugins/global/plugins.bundle.js')}}"></script>
+    <script src="{{ asset('/js/scripts.bundle.js')}}"></script>
+    <!--end::Global Javascript Bundle-->
+
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('/js/custom/landing.js')}}"></script>
+    <script src="{{ asset('js/custom/pages/pricing/general.js')}}"></script>
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <!--end::Vendors Javascript-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('js/custom/pages/user-profile/general.js')}}"></script>
+    <script src="{{ asset('js/widgets.bundle.js')}}"></script>
+    <script src="{{ asset('js/custom/widgets.js')}}"></script>
+    <script src="{{ asset('js/custom/apps/chat/chat.js')}}"></script>
+    <script src="{{ asset('js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add other JS scripts as needed -->
+{% endblock %}

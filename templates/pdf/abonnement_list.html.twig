@@ -1,0 +1,151 @@
+{# templates/pdf/abonnement_list.html.twig #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription List</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+table {
+    width: 100%; /* Ensure the table fills its container */
+    border-collapse: collapse; /* Collapse table borders into a single border */
+    margin-bottom: 20px; /* Add space below the table */
+}
+
+/* Apply styles to table header cells */
+th {
+    border: 1px solid #ddd; /* Add border to header cells */
+    padding: 12px; /* Increase padding for better spacing */
+    background-color: #f2f2f2; /* Light background color for header cells */
+    font-weight: bold; /* Make header text bold */
+    text-align: left; /* Align header text to the left */
+}
+
+/* Apply styles to table data cells */
+td {
+    border: 1px solid #ddd; /* Add border to data cells */
+    padding: 12px; /* Increase padding for better spacing */
+    text-align: left; /* Align data text to the left */
+}
+        .expired-text {
+            color: red;
+        }
+
+        /* Add styles for the header */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        /* Add styles for the blue bars */
+        .blue-bar {
+            background-color: #009EF7;
+            height: 80px;
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: center; /* Center the site name */
+        }
+        .blue-bar-3 {
+            background-color: #009EF7;
+            height: 50px;
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: center;   
+        }
+        .site-name {
+            font-size: 30px;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 10px;
+            background-color: #009EF7; /* Add blue background color */
+            padding: 10px; /* Add padding to increase space around the text */
+        }
+
+        span {
+            color: #333;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        #date-time {
+            font-size: 16px; /* Adjust the font size as per your preference */
+            color: #333; /* Set the text color */
+            font-weight: bold; /* Make the text bold */
+            margin-top: 10px; /* Add margin to separate from the table */
+        }
+
+        .current-time {
+        font-size: 16px;
+        font-weight: bold; 
+        color: #333; 
+        background-color: #ffffff; 
+        padding: 5px 10px;
+        border-radius: 5px; 
+        display: inline-block; 
+        }
+    </style>
+</head>
+<body>
+    <div class="blue-bar">
+       
+        <div class="site-name">Alphafit</div> <!-- Display site name in the blue bar -->
+    </div>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+            </div>
+        </div>
+        <h1>List Des Abonnements</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Pack</th>
+                    <th>Client</th>
+                    <th>Coach</th>
+                    <th>Nutritionist</th>
+                    <th>Expiration Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in abo %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td>{{ i.npack.nom }}</td>
+                        <td>{{ i.client.nom }}</td>
+                        <td>{{ i.coach.nom | default('<-vide->') }}</td>
+                        <td>{{ i.nutri.nom | default('<-vide->') }}</td>
+                        <td class="{{ (i.expirationDate.timestamp() < "now"|date('U')) ? 'expired-text' : '' }}">
+                            {{ i.expirationDate |date('Y-m-d') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="blue-bar-3">
+        <span class="text-muted">&copy; 2024 Alphafit. All rights reserved.</span>
+    </div>
+    <img alt="Logo" src="{{ asset('media/logos/custom-1.png')}}" class="h-100px h-lg-120px" style="margin-top: 20px; padding-left: 70px;" />
+</body>
+</html>

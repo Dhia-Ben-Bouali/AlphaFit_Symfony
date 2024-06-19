@@ -1,0 +1,88 @@
+{# commande/index.html.twig #}
+{% extends 'baseback.html.twig' %}
+
+{% block bodyback %}
+<head>
+    <h1 style="color: #3498db;">Admin Orders View</h1>
+
+    <!-- Search form -->
+    <div class="mb-4">
+        <form method="get" action="{{ path('app_commande') }}" class="form-inline">
+            <div class="form-group">
+                <label for="cardholderName" class="mr-2">Cardholder Name:</label>
+                <input type="text" name="cardholderName" class="form-control" id="cardholderName" value="{{ cardholderName }}">
+            </div>
+            <button type="submit" class="btn btn-primary ml-2">Search</button>
+        </form>
+    </div>
+</head>
+    <!-- Transactions Table -->
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title fw-semibold mb-4">Recent Transactions</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap align-middle">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Date</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Address</th>
+                                <th>Phone Number</th>
+                                <th>Total</th>
+                                <th>Purchased Items</th>
+                            </tr>
+                        </thead>
+                        <tbody id="commandesTable">
+                            {% include 'commande/commande_list.html.twig' with {'commandes': commandes} %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export to Excel Button -->
+    <div class="export-container" style="margin-top: 20px;">
+        <a href="{{ path('app_commande_export') }}" class="btn btn-success">Export to Excel</a>
+    </div>
+
+    <!-- Sales Chart -->
+    <h1>Sales Chart</h1>
+    <div style="width:75%;">
+        <canvas id="salesChart"></canvas>
+    </div>
+
+{% endblock %}
+
+{% block jsback %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('salesChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line', // Change to 'bar' if you prefer a bar chart
+                data: {
+                    labels: {{ labels|json_encode|raw }},
+                    datasets: [{
+                        label: 'Daily Sales',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        data: {{ totals|json_encode|raw }}
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

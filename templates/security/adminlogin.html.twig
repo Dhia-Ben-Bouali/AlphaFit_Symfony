@@ -1,0 +1,187 @@
+
+
+<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+<link rel="shortcut icon" href="{{ asset('media/logos/alphalogo.png')}}"  />
+<!--begin::Fonts(mandatory for all pages)-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+<!--end::Fonts-->
+
+<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+<link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+<!--end::Global Stylesheets Bundle-->
+<style>
+    body {
+        background-image: url('{{ asset('media/auth/bg10.jpeg') }}');
+        background-size: cover;
+        background-position: center;
+    }
+
+         /* Style the container around the reCAPTCHA */
+     .g-recaptcha {
+         border-radius: 10px; /* Adjust the value to your preferred rounded corner size */
+         overflow: hidden; /* Hide overflow to avoid unwanted effects */
+     }
+
+    /* Style the reCAPTCHA iframe directly (if needed) */
+    .g-recaptcha iframe {
+        border-radius: 10px; /* Adjust the value to match the container's rounded corners */
+    }
+
+    /* Add any additional styles for your content here */
+</style>
+<body>
+<!--begin::Body-->
+<div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12" style="margin-right: 390px">
+    <!--begin::Wrapper-->
+    <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
+        <!--begin::Content-->
+        <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
+            <!--begin::Wrapper-->
+            <div class="d-flex flex-center flex-column-fluid pb-15 pb-lg-20">
+                <!--begin::Form-->
+                <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="{{ path('app_login') }}" method="post" onsubmit="return validateForm()">
+                    <!--begin::Heading-->
+                    <div class="text-center mb-11">
+                        <!--begin::Title-->
+                        <h1 class="text-dark fw-bolder mb-3">Sign In</h1>
+                        <!--end::Title-->
+                        <!--begin::Subtitle-->
+                        <div class="text-gray-500 fw-semibold fs-6">ALPHA FIT</div>
+                        <!--end::Subtitle=-->
+                    </div>
+                    <!--begin::Heading-->
+                    <!--begin::Login options-->
+                    <div class="row g-3 mb-9">
+                        <!--begin::Col-->
+                        <div class="col-md-6">
+                            <!--begin::Google link=-->
+                            <a href="{{ path('connect_google') }}"  class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+                                <img alt="Logo" src="{{ asset('media/svg/brand-logos/google-icon.svg')}}" class="h-15px me-3" />Sign in with Google</a>
+                            <!--end::Google link=-->
+                        </div>
+                        <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-md-6">
+                            <!--begin::Google link=-->
+                            <a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+                                <img alt="Logo" src="{{ asset('media/svg/brand-logos/apple-black.svg')}}" class="theme-light-show h-15px me-3" />
+                                <img alt="Logo" src="{{ asset('media/svg/brand-logos/apple-black-dark.svg')}}" class="theme-dark-show h-15px me-3" />Sign in with Apple</a>
+                            <!--end::Google link=-->
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <!--end::Login options-->
+                    <!--begin::Separator-->
+                    <div class="separator separator-content my-14">
+                        <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
+                    </div>
+                    <!--end::Separator-->
+
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label">Email</label>
+                        <input type="email" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\$">
+
+                        <span id="emailError" class="error-message"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inputPassword" class="form-label">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                        <span id="passwordError" class="error-message"></span>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <div class="g-recaptcha" data-sitekey="6LeQEn8pAAAAAKm5VhxKbONnPTq3sindgyJCJyLY" style="margin-top: 10px"></div>
+                    <span id="recaptchaError" class="error-message" style="color: red; font-size: 12px; display: block; margin-top: 5px;"></span>
+
+                    <button class="btn btn-lg btn-primary w-100" type="submit" style="margin-top: 20px">
+                        Sign in
+                    </button>
+
+                    <div class="d-flex justify-content-between mt-3">
+                        <a href="{{ path('forgotpassadmin') }}" class="link-primary">Forgot Password?</a>
+
+                    </div>
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Wrapper-->
+
+        </div>
+        <!--end::Content-->
+    </div>
+    <!--end::Wrapper-->
+</div>
+<!--end::Body-->
+</body>
+<script>var hostUrl = "assets/";</script>
+
+<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+<script src="{{ asset('/plugins/global/plugins.bundle.js')}}"></script>
+<script src="{{ asset('/js/scripts.bundle.js')}}"></script>
+<!--end::Global Javascript Bundle-->
+<!--begin::Vendors Javascript(used for this page only)-->
+<script src="{{ asset('/plugins/custom/fslightbox/fslightbox.bundle.js')}}"></script>
+<script src="{{ asset('/plugins/custom/typedjs/typedjs.bundle.js')}}"></script>
+<!--end::Vendors Javascript-->
+<!--begin::Custom Javascript(used for this page only)-->
+<script src="{{ asset('/js/custom/landing.js')}}"></script>
+<script src="{{ asset('js/custom/pages/pricing/general.js')}}"></script>
+
+<script src="{{ asset('libs/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<!--begin::Custom Javascript(used for this page only)-->
+<script src="{{ asset('js/custom/authentication/sign-in/general.js')}}"></script>
+<script>
+    function validateForm() {
+        var emailInput = document.getElementById('inputEmail');
+        var passwordInput = document.getElementById('inputPassword');
+        var emailError = document.getElementById('emailError');
+        var passwordError = document.getElementById('passwordError');
+        var recaptchaError = document.getElementById('recaptchaError');
+        var recaptchaResponse = grecaptcha.getResponse(); // Get reCAPTCHA response
+
+        // Reset previous error messages
+        emailError.textContent = "";
+        passwordError.textContent = "";
+        recaptchaError.textContent = "";
+
+        // Check email
+        if (emailInput.value.trim() === "") {
+            emailError.textContent = "Please enter your email address.";
+            return false;
+        }
+
+        if (!emailInput.checkValidity()) {
+            emailError.textContent = "Please enter a valid email address.";
+            return false;
+        }
+
+        // Check password
+        if (passwordInput.value.trim() === "") {
+            passwordError.textContent = "Please enter your password.";
+            return false;
+        }
+
+        if (!passwordInput.checkValidity()) {
+            passwordError.textContent = "Please enter a valid password.";
+            return false;
+        }
+
+        // Check reCAPTCHA
+        if (recaptchaResponse === "") {
+            // No reCAPTCHA response
+            recaptchaError.textContent = "Please complete the reCAPTCHA challenge.";
+            return false;
+        }
+
+        // Add additional validation as needed
+
+        return true; // If all validations pass, allow the form submission
+    }
+</script>

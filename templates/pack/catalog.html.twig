@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packages Catalog</title>
+    <!-- Add your styles here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .catalog-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .package {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .package img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .package-details {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="catalog-header">
+        <h1>Packages Catalog</h1>
+    </div>
+
+    {% for package in packages %}
+        <div class="package">
+            <h2>{{ package.name }}</h2>
+            {% if package.image %}
+                <img src="{{ asset('uploads/packages/' ~ package.image) }}" alt="{{ package.name }}">
+            {% endif %}
+            <div class="package-details">
+                <p><strong>Description:</strong> {{ package.description }}</p>
+                <p><strong>Price:</strong> ${{ package.price }}</p>
+                <!-- Add more package details as needed -->
+            </div>
+        </div>
+    {% endfor %}
+</body>
+</html>

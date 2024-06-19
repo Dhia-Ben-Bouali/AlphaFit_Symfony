@@ -1,0 +1,240 @@
+{% extends 'baseback.html.twig' %}
+{% block css %}
+ <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    	<link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+
+ <link rel="shortcut icon" type="image/png" href="{{ asset('media/logos/alphalogo.png')}}" />
+    <link rel="stylesheet" href="{{ asset('css/styles.min.css')}}" />
+	<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		<!--begin::Fonts(mandatory for all pages)-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Vendor Stylesheets(used for this page only)-->
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Vendor Stylesheets-->
+		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+	 <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    	<link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+{% block bodyback %}
+<!--begin::Content-->
+							<div id="kt_app_content" class="app-content flex-column-fluid">
+								<!--begin::Content container-->
+								<div id="kt_app_content_container" class="app-container container-xxl" style="margin-top:100px">
+												<!--begin::Main row-->
+									<div class="row g-5">
+										<!--begin::Image and Form columns-->
+										<div class="col-lg-4">
+									  <!--begin::Card for Image-->
+										<div class="card card-custom card-stretch">
+											<div class="card-body d-flex justify-content-center align-items-center p-0">
+												<img src="{{asset('uploads/images/img/2.svg')}}" class="img-fluid" alt="Image">
+											</div>
+										</div>
+										<!--end::Card for Image-->
+										</div>
+									<!--begin::Products-->
+											<div class="col-lg-8">
+						<!--begin::Card for Form-->
+						<div class="card card-custom card-stretch">
+							<div class="card-header">
+								<div class="card-title">
+																<h2 style="color: blue;">General</h2>
+													</div>
+												</div>
+												<!--end::Card header-->
+												<!--begin::Card body-->
+																								<div class="card-body pt-0">
+													<!--begin::Input group-->
+													<div class="mb-10 fv-row">
+														<!--begin::Label-->
+														<label class="required form-label">Category Name</label><br>
+													{{ form_start(formA,{'attr': {'novalidate': 'novalidate','id':'editFormId'}} ) }} 
+
+															{{ form_label(formA.libelle) }}
+															{{ form_widget(formA.libelle) }}
+															 {{ form_errors(formA.libelle) }}
+
+															 <br><br><br>
+															{{ form_end(formA) }}
+		
+
+												
+											</div>
+
+										<!--end::Main column-->
+								</div>
+								<!--end::Content container-->
+							</div>
+							<!--end::Content-->
+
+
+												<!--end::Table body-->
+											<!--end::Table-->
+										</div>
+										<!--end::Card body-->
+									</div>
+									<!--end::Products-->
+								</div>
+								<!--end::Content container-->
+							</div>
+							<!--end::Content-->
+						</div>
+						<!--end::Content wrapper-->
+						
+					</div>
+					<!--end:::Main-->
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>	
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+	document.addEventListener("DOMContentLoaded", function () {
+
+        const form = document.getElementById('editFormId');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Custom validation function
+        if (!validateForm()) {
+            return;
+        }
+
+        // Create a FormData object and append the CSRF token
+        const formData = new FormData(formA);
+        formData.append('{{ csrf_token('up_categorie') }}', '1'); // Replace '1' with your actual CSRF token
+
+        // Submit the form
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Form submitted successfully!');
+                    modal.hide(); // Optionally, you can perform additional actions after successful form submission
+                    location.reload();
+                } else {
+                    console.error('Form submission failed.');
+                    // Handle errors and display messages under each field
+                    handleFormErrors(response);
+                }
+            })
+            .catch(error => console.error('Error submitting form:', error));
+    });
+
+    // Custom validation function
+    function validateForm() {
+        let isValid = true;
+
+        // Clear all existing error messages
+        document.querySelectorAll('.error-message').forEach(error => {
+            error.textContent = '';
+        });
+
+        // Example: Check if the nom field is empty
+        // Example: Check if the nom field is empty
+        const nomInput = document.getElementById('{{ formA.libelle.vars.id }}');
+        const nomValue = nomInput.value.trim();
+        if (nomValue === '') {
+            displayErrorMessage(nomInput, 'libelle is required.');
+            isValid = false;
+        }
+
+
+        return isValid;
+    }
+
+    // Function to handle form errors and display messages under each field
+    function handleFormErrors(response) {
+        // Assuming the server returns errors in JSON format
+        response.json().then(errors => {
+            Object.keys(errors).forEach(fieldName => {
+                const field = form.querySelector(`[name="${fieldName}"]`);
+                if (field) {
+                    displayErrorMessage(field, errors[fieldName]);
+                }
+            });
+        });
+    }
+
+    // Function to display error messages under the input fields
+    function displayErrorMessage(input, message) {
+        const errorContainer = input.parentElement.querySelector('.error-message');
+        if (errorContainer) {
+            errorContainer.textContent = message;
+            errorContainer.style.color = 'red'; // Set the text color to red
+        } else {
+            // Create error message element if not present
+            const errorMessage = document.createElement('div');
+            errorMessage.classList.add('error-message');
+            errorMessage.textContent = message;
+            errorMessage.style.color = 'red'; // Set the text color to red
+            input.parentElement.appendChild(errorMessage);
+        }
+    }
+});
+</script>			
+{% endblock %}
+		
+		
+		
+		
+		
+		
+		{% block jsback %}
+
+		<!--end::Modals-->
+		<!--begin::Javascript-->
+		<script>var hostUrl = "assets/";</script>
+		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Vendors Javascript(used for this page only)-->
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<!--end::Vendors Javascript-->
+		<!--begin::Custom Javascript(used for this page only)-->
+		<script src="assets/js/custom/apps/ecommerce/catalog/products.js"></script>
+		<script src="assets/js/widgets.bundle.js"></script>
+		<script src="assets/js/custom/widgets.js"></script>
+		<script src="assets/js/custom/apps/chat/chat.js"></script>
+		<script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+		<script src="assets/js/custom/utilities/modals/create-app.js"></script>
+		<script src="assets/js/custom/utilities/modals/users-search.js"></script>
+		<script src="{{ asset('libs/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('js/sidebarmenu.js')}}"></script>
+<script src=".{{ asset('js/app.min.js')}}"></script>
+<script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+<script src="{{ asset('libs/simplebar/dist/simplebar.js')}}"></script>
+<script src="{{ asset('js/dashboard.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<!--begin::Javascript-->
+		
+		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Vendors Javascript(used for this page only)-->
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<!--end::Vendors Javascript-->
+		<!--begin::Custom Javascript(used for this page only)-->
+		<script src="assets/js/custom/apps/ecommerce/catalog/products.js"></script>
+		<script src="assets/js/widgets.bundle.js"></script>
+		<script src="assets/js/custom/widgets.js"></script>
+		<script src="assets/js/custom/apps/chat/chat.js"></script>
+		<script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+		<script src="assets/js/custom/utilities/modals/create-app.js"></script>
+		<script src="assets/js/custom/utilities/modals/users-search.js"></script>
+		<!--end::Custom Javascript-->
+		<!--end::Javascript-->
+		{% endblock %}
+	
+
+

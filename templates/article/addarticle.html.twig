@@ -1,0 +1,183 @@
+{% extends 'baseback.html.twig' %}
+{% block css %}
+ <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    	<link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+
+ <link rel="shortcut icon" type="image/png" href="{{ asset('media/logos/alphalogo.png')}}" />
+    <link rel="stylesheet" href="{{ asset('css/styles.min.css')}}" />
+	<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		<!--begin::Fonts(mandatory for all pages)-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Vendor Stylesheets(used for this page only)-->
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Vendor Stylesheets-->
+		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+	 <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    	<link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+{% block bodyback %}
+<!--begin::Content-->
+							<div id="kt_app_content" class="app-content flex-column-fluid">
+								<!--begin::Content container-->
+								<div id="kt_app_content_container" class="app-container container-xxl" style="margin-top:90px">
+												<!--begin::Main row-->
+									<div class="row g-5">
+										<!--begin::Image and Form columns-->
+										<div class="col-lg-4">
+									  <!--begin::Card for Image-->
+										<div class="card card-custom card-stretch">
+											<div class="card-body d-flex justify-content-center align-items-center p-0">
+												<img src="{{asset('uploads/images/img/2.svg')}}" class="img-fluid" alt="Image">
+											</div>
+										</div>
+										<!--end::Card for Image-->
+										</div>
+									<!--begin::Products-->
+											<div class="col-lg-8">
+						<!--begin::Card for Form-->
+						<div class="card card-custom card-stretch">
+							<div class="card-header">
+								<div class="card-title">
+																<h2 style="color: blue;">General</h2>
+													</div>
+												</div>
+												<!--end::Card header-->
+												<!--begin::Card body-->
+												<div class="card-body pt-0">
+													<!--begin::Input group-->
+													<div class="mb-10 fv-row">
+													<!--begin::Label-->
+
+															{{ form_start(formB,{'attr': {'novalidate': 'novalidate','id':'editFormId'}} ) }} 
+															<table>
+															<tr>
+															<td>{{form_label(formB.nom)}}</td>
+															<td>{{form_widget(formB.nom)}}</td>
+															<td>{{ form_errors(formB.nom) }}</td>
+
+
+															</tr><tr>
+															<tr>
+															<td>{{form_label(formB.categorie)}}</td>
+															<td>{{form_widget(formB.categorie)}}</td>
+															<td>{{ form_errors(formB.categorie) }}</td>
+
+															</tr>
+															<td>{{form_label(formB.quantite)}}</td>
+															<td>{{form_widget(formB.quantite)}} </td>
+															<td>{{ form_errors(formB.quantite) }}</td>
+
+															</tr>
+
+															<tr>
+															<td>{{form_label(formB.description)}}</td>
+															<td>{{form_widget(formB.description)}}</td>
+															<td>{{ form_errors(formB.description) }}</td>
+															</tr>
+
+															<tr>
+															<td>{{ form_label(formB.image) }}</td>
+															<td>{{ form_widget(formB.image) }}</td>
+
+															</tr>
+															<tr>
+															<td>{{form_label(formB.prix)}}</td>
+															<td>{{form_widget(formB.prix)}}</td>
+															<td>{{ form_errors(formB.prix) }}</td>
+															</tr>
+															</table> <br><br><br>
+															{{form_end(formB)}}
+																	
+
+												
+													</div>
+										</div>
+										<!--end::Main column-->
+								</div>
+								<!--end::Content container-->
+							</div>
+							<!--end::Content-->
+
+
+												<!--end::Table body-->
+											<!--end::Table-->
+										</div>
+										<!--end::Card body-->
+									</div>
+									<!--end::Products-->
+								</div>
+								<!--end::Content container-->
+							</div>
+							<!--end::Content-->
+						</div>
+						<!--end::Content wrapper-->
+						
+					</div>
+					<!--end:::Main-->
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>	
+
+{% endblock %}
+
+
+
+		
+		
+		
+		{% block jsback %}
+
+		<!--end::Modals-->
+		<!--begin::Javascript-->
+		<script>var hostUrl = "assets/";</script>
+		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Vendors Javascript(used for this page only)-->
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<!--end::Vendors Javascript-->
+		<!--begin::Custom Javascript(used for this page only)-->
+		<script src="assets/js/custom/apps/ecommerce/catalog/products.js"></script>
+		<script src="assets/js/widgets.bundle.js"></script>
+		<script src="assets/js/custom/widgets.js"></script>
+		<script src="assets/js/custom/apps/chat/chat.js"></script>
+		<script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+		<script src="assets/js/custom/utilities/modals/create-app.js"></script>
+		<script src="assets/js/custom/utilities/modals/users-search.js"></script>
+		<script src="{{ asset('libs/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('js/sidebarmenu.js')}}"></script>
+<script src=".{{ asset('js/app.min.js')}}"></script>
+<script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+<script src="{{ asset('libs/simplebar/dist/simplebar.js')}}"></script>
+<script src="{{ asset('js/dashboard.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<!--begin::Javascript-->
+		
+		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Vendors Javascript(used for this page only)-->
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<!--end::Vendors Javascript-->
+		<!--begin::Custom Javascript(used for this page only)-->
+		<script src="assets/js/custom/apps/ecommerce/catalog/products.js"></script>
+		<script src="assets/js/widgets.bundle.js"></script>
+		<script src="assets/js/custom/widgets.js"></script>
+		<script src="assets/js/custom/apps/chat/chat.js"></script>
+		<script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+		<script src="assets/js/custom/utilities/modals/create-app.js"></script>
+		<script src="assets/js/custom/utilities/modals/users-search.js"></script>
+		<!--end::Custom Javascript-->
+		<!--end::Javascript-->
+		{% endblock %}
+	
+
+

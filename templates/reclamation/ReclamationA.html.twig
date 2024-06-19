@@ -1,0 +1,328 @@
+
+{% extends 'baseback.html.twig' %}
+{% block css %}
+    <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('media/logos/alphalogo.png')}}" />
+    <link rel="stylesheet" href="{{ asset('/css/styles.min.css')}}" />
+    <style>   
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+    .delete-button {
+        background-color: #ff6347;
+        color: #fff; 
+        border: none; 
+        padding: 6px 12px;
+        border-radius: 3px; 
+        cursor: pointer; 
+        font-size: 14px; 
+        transition: background-color 0.3s ease; 
+    }
+    .delete-button:hover {
+        background-color: #cc0000; 
+    }
+    input[type="text"] {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    margin-bottom: 10px;
+    }
+
+    input[type="text"]:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px #007bff;
+    }
+
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+.pagination span,
+.pagination a {
+    padding: 6px 12px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+
+.pagination .current {
+    background-color: #009EF7;
+    color: #fff;
+    border-color: #009EF7;
+}
+
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+
+.pagination .next a:after {
+    content: 'Next';
+}
+
+/* Replace "<" with text */
+.pagination .prev a:after {
+    content: 'Pre';
+}
+
+
+button[type="submit"] {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.formedate {
+    margin: 10px;
+}
+
+#reclamationTable th a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        margin-right: 10px;
+}
+
+#searchDate {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#searchDate:focus {
+    border-color: #009EF7;
+}
+
+/* Style for the select dropdown */
+#searchEtat {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Style for the option elements */
+#searchEtat option {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Hover effect for options */
+#searchEtat option:hover {
+    background-color: #f0f0f0;
+}
+    </style>
+{% endblock %}
+
+{% block bodyback %}
+
+        <!--end::Header container-->
+    <div class="card mb-5 mb-xl-8">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{message}}
+            </div>
+        {% endfor %}
+        <!--begin::Header-->
+        <div class="card-header border-0 pt-5" style="margin-top: 50px">
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-title fw-semibold">Reclamation List</span>
+            </h3>
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="card-body py-3" >
+            <!--begin::Table container-->
+            <div class="table-responsive">
+                <!--begin::Table-->
+                <div class="formedate">
+                    <form action="{{ path('app_reclamationA') }}" method="GET">
+                        <input type="date" id="searchDate" name="date" value="">
+                        <select name="etat" id="searchEtat">
+                            <option value= Null>Select Etat</option>
+                            <option value="pending">Pending</option>
+                            <option value="under treatment">Under Treatment</option>
+                            <option value="treated">Treated</option>
+                        </select>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+                <table class="table align-middle gs-0 gy-4" id="reclamationTable">
+                    <!--begin::Table head-->
+                    <thead>
+                    <tr class="fw-bold text-white  " style="background-color: #009EF7">
+                        <th class="ps-4 min-w-100px rounded-start">Id</th>
+                        <th class="min-w-125px">Nom</th>
+                        <th class="min-w-125px">Contenu</th>
+                        <th class="min-w-200px">
+                            <a href="{{ path('app_reclamationA', {'sortByDate': 'asc'}) }}">Date&nbsp; <span>&#9660;</span></a>
+                            <a href="{{ path('app_reclamationA', {'sortByDate': 'desc'}) }}"><span>&#9650;</span></a>
+                        </th>
+                        <th class="min-w-200px">État</th>
+                        <th class="min-w-200px">Edit</th>
+                        <th class="min-w-200px">Delete</th>
+
+                    </tr>
+                    </thead>
+                    <!--end::Table head-->   
+                    <!--begin::Table body-->
+                    <tbody>
+                        {% for i in rec %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="d-flex justify-content-start flex-column">
+                                            <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{ i.id  }}</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6" data-column="recuser">{{ i.recuser.nom }}</a>
+                                </td>
+                                <td>
+                                    <a class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6" data-column="contenu">{{ i.contenu }}</a>
+                                </td>
+                                <td>
+                                    <a class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6" data-column="date">{{ i.date|date('Y-m-d') }}</a>
+                                </td>
+                                <td>
+                                    <a class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6" data-column="etat">{{ i.etat }}</a>
+                                </td>
+                                <td>
+
+                                    <a href="{{ path('app_edit', {'id': i.id}) }}" class="btn btn-sm btn-primary align-self-center edit-user">Edit</a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('app_delete', {'id': i.id}) }}" class="align-self-center delete-button">Delete</a>
+                                </td>
+                            <tr>
+                        {% endfor %}
+                    </tbody>
+                    <!--end::Table body-->
+                </table>
+                <!--end::Table-->
+                <div class="pagination">
+                    {{ knp_pagination_render(rec) }}
+                </div>
+            </div>
+            <!--end::Table container-->
+
+        </div>
+        <!-- Modal -->
+        <!--begin::Modal - Add task-->
+        <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_user_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bold">Add User</h2>
+                        <!--end::Modal title-->
+
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+        </div>
+        <!--end::Modal - Add task-->
+        <!--begin::Body-->
+        <!-- Edit Profile Modal -->
+        <div class="modal fade" id="AddUserModal" tabindex="-1" aria-labelledby="AddUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AddUserModalLabel">Edit Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Modal Body with the form -->
+                    <div class="modal-body">
+                        <span id="userId"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+{% endblock %}
+{% block jsback %}
+    <script src="{{ asset('/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{ asset('/plugins/global/plugins.bundle.js')}}"></script>
+    <script src="{{ asset('/js/scripts.bundle.js')}}"></script>
+    <!--end::Global Javascript Bundle-->
+
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('/js/custom/landing.js')}}"></script>
+    <script src="{{ asset('js/custom/pages/pricing/general.js')}}"></script>
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <!--end::Vendors Javascript-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('js/custom/pages/user-profile/general.js')}}"></script>
+    <script src="{{ asset('js/widgets.bundle.js')}}"></script>
+    <script src="{{ asset('js/custom/widgets.js')}}"></script>
+    <script src="{{ asset('js/custom/apps/chat/chat.js')}}"></script>
+    <script src="{{ asset('js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        
+
+
+    <script src="{{ asset('/libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{ asset('/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('/js/sidebarmenu.js')}}"></script>
+    <script src=".{{ asset('/js/app.min.js')}}"></script>
+    <script src="{{ asset('/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{ asset('/libs/simplebar/dist/simplebar.js')}}"></script>
+    <script src="{{ asset('/js/dashboard.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalogue</title>
+    <!-- Avant -->
+    <link rel="stylesheet" href="http://127.0.0.1:8000/$https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css">
+
+    <!-- Après (chemin relatif ou absolu local) -->
+    <link rel="stylesheet" href="/path/to/local/fullcalendar@5.3.0/main.min.css">
+
+    <style>
+        /* Styles CSS ici */
+        body {
+            margin: 0; /* Supprimer les marges par défaut du corps */
+            font-family: Arial, sans-serif; /* Utilisation d'une police par défaut */
+        }
+        .container {
+            background-color: #084298; /* Couleur de fond bleue de la première page */
+            color: white; /* Couleur du texte */
+            padding: 20px; /* Espacement intérieur pour le contenu */
+            min-height: 100vh; /* Hauteur minimale de la première page égale à la hauteur de la fenêtre visible */
+        }
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-top: -20px;
+
+        }
+        .project-name {
+            font-size: 40px;
+            margin-left: 200px; /* Espacement à gauche pour le nom du projet */
+            margin-top: 20px; /* Supprimer la marge supérieure par défaut */
+            margin-bottom: 30%;
+
+        }
+        .download-date {
+            margin-top: 45%; /* Supprimer la marge supérieure par défaut */
+        }
+        .second-page {
+            background-color: #f2f2f2; /* Couleur de fond de la deuxième page */
+            padding: 20px;
+            page-break-before: always; /* Forcer un saut de page avant la deuxième page */
+        }
+        .carousel-inner {
+            padding: 20px;
+        }
+        /* Styles pour la description */
+        .description {
+            margin-top: 20px;
+            font-size: 22px;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 800px; /* Ajustez la largeur maximale selon vos besoins */
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 70%;
+
+        }
+
+        /* Pour le trait fin entre les produits */
+        /* Styles pour la description */
+        .card2 {
+            margin-bottom: 20px; /* Espacement entre les produits */
+            border-bottom: 1px solid #add8e6; /* Trait fin de couleur bleu clair */
+            padding-bottom: 20px; /* Espacement sous chaque produit */
+            text-align: center; /* Centrage des éléments dans la carte */
+        }
+
+        .card2 img {
+            display: block; /* Pour s'assurer que l'image reste centrée */
+            margin: auto; /* Centrer l'image horizontalement */
+            max-width: 100%; /* Pour éviter que l'image ne dépasse de la carte */
+            margin-bottom: 10px; /* Espacement entre l'image et les autres éléments */
+        }
+
+        .card2 h3 {
+            font-size: 20px; /* Taille de police pour le nom du produit */
+        }
+
+        .card2 p {
+            font-size: 18px; /* Taille de police pour la description et le prix */
+            margin-bottom: 8px; /* Espacement entre les éléments */
+        }
+
+        .description p {
+
+            padding: 15px;
+            border-radius: 5px; /* Coins arrondis */
+            border-color:blanc;
+            margin-top: 20%;
+            border: 1px solid #add8e6; /* Bordure de couleur bleu clair */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Légère ombre */
+
+        }
+        .titre {
+            margin-top: 20px; /* Marge supérieure pour séparer le contenu précédent */
+        }
+        .titre p {
+            margin-top: 40%; /* Marge supérieure pour séparer le contenu précédent */
+        }
+        .end-paragraphe {
+            margin-top: 40%;
+            font-size: 18px; /* Taille de police pour le nom du produit */
+
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 60%;
+            text-align: center;
+            margin: auto; /* Pour centrer l'image horizontalement */
+            /* Pour centrer l'image horizontalement dans IE */
+        }
+
+
+    </style>
+</head>
+<body>
+<!-- Première page avec logo et nom du projet -->
+<div class="container">
+    <div class ="titre">
+        <img src="{{ absolute_url(asset('media/logos/alphalogo.png')) }}" alt="Logo" class="logo">
+
+        <h1 class="project-name">Alpha Fit Catalogue</h1>
+        <div class="image-container">
+            <img src="{{ absolute_url(asset('media/logos/a.jpg')) }}" class="centered-image">
+        </div>
+        <footer>
+            <p>Date de création du catalogue : {{ dateCreationCatalogue | date('d/m/Y ') }}</p>
+        </footer>
+    </div>
+</div>
+
+
+<!-- Deuxième page avec la description de la boutique -->
+<div class="container">
+    <div class="description">
+        <h2>Bienvenue Dans Notre Catalogue</h2>
+        <p>Dans  notre ctalogue  dédiée au sport et à la nutrition, où notre passion pour la santé et le bien-être se traduit par une sélection soigneusement choisie de produits de qualité supérieure.<br> Chez nous, vous trouverez tout ce dont vous avez besoin pour atteindre vos objectifs de remise en forme et de vie saine. Nos rayons regorgent de suppléments nutritionnels de premier choix, de protéines de haute qualité, de vitamines essentielles et d'équipements de sport de pointe pour vous accompagner à chaque étape de votre parcours.<br>
+
+        </p>
+    </div>
+</div>
+</div>
+
+<!-- Troisième page avec les produits -->
+<div class="container">
+    <div class="carousel-inner">
+        {% for produit in produits %}
+            <div class="card2">
+                <img src="{{ absolute_url(asset('uploads/images/' ~ produit.image)) }}" class="product-image">
+                <h3>{{ produit.nom }}</h3>
+
+                <p>{{ produit.description }}</p>
+                <p>{{ produit.prix }}DT</p>
+                <!-- Ajoutez la cote du produit ici -->
+            </div>
+            <!-- Ajouter la balise de séparation des pages après chaque produit -->
+            <div class="page-break"></div>
+        {% endfor %}
+    </div>
+    <div class="end-paragraphe">
+        <p>Nous espérons que ce catalogue vous a fourni une vision complète de notre gamme
+            de produits dédiés au sport et à la nutrition. <br>Pour plus d'informations détaillées sur nos produits et
+            pour découvrir notre gamme complète, nous vous invitons à consulter notre site web.</p><a href="http://127.0.0.1:8000/shop"></a>
+    </div>
+</div>
+<!-- Paragraphe à la fin du catalogue -->
+
+
+</body>
+</html>

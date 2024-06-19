@@ -1,0 +1,209 @@
+{% extends 'baseback.html.twig' %}
+{% block css %}
+ <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    	<link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+
+ <link rel="shortcut icon" type="image/png" href="{{ asset('media/logos/alphalogo.png')}}" />
+    <link rel="stylesheet" href="{{ asset('css/styles.min.css')}}" />
+	<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		<!--begin::Fonts(mandatory for all pages)-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Vendor Stylesheets(used for this page only)-->
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Vendor Stylesheets-->
+		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+	 <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    	<link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+{% block bodyback %}
+<!--begin::Content-->
+							<div id="kt_app_content" class="app-content flex-column-fluid">
+								<!--begin::Content container-->
+								<div id="kt_app_content_container" class="app-container container-xxl">
+									<!--begin::Products-->
+									<div class="card card-flush">
+										<!--begin::Card header-->
+										<div class="card-header align-items-center py-5 gap-2 gap-md-5">
+											<!--begin::Card title-->
+										
+											<!--end::Card title-->
+											<!--begin::Card toolbar-->
+											<div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+												
+												<!--begin::Add product-->
+                                                    <form action="{{ path('addarticle') }}" method="GET">
+																<button type="submit" class="btn btn-primary">Add product</button>
+															</form>											
+                                                            	<!--end::Add product-->
+											</div>
+											<!--end::Card toolbar-->
+										</div>
+										<!--end::Card header-->
+										<!--begin::Card body-->
+										<div class="card-body pt-0">
+											<!--begin::Table-->
+											<table class="table align-middle table-row-dashed fs-6 gy-50" id="searchResults" class="table">
+
+												<!--begin::Table head-->
+												<thead style="color: blue;">
+													<!--begin::Table row-->
+        										<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0" >
+                                                    <th >Name </th>
+                                                    <th >Desc</th>
+                                                    <th >Qty</th>
+                                                    <th >Price</th>
+                                                    <th >Image</th>
+                                                    <th >Category</th>
+                                                    <th class="text-end min-w-10px">Actions</th>
+													
+												</thead>
+												<!--end::Table head-->
+												<!--begin::Table body-->
+												<tbody class="fw-semibold text-gray-600">
+													<div class="card-title">
+														<!--begin::Search-->
+														<div class="d-flex align-items-center position-relative my-1">
+
+															<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+															<span class="svg-icon svg-icon-1 position-absolute ms-4">
+														<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+															<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+															<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+														</svg>
+													</span>
+															<!--end::Svg Icon-->
+															<form method="post" action="{{path('list_article')}}">
+																{{form_start(formC)}}
+																{{ form_widget(formC.nom, {'attr': {'class': 'form-control form-control-solid w-250px ps-14', 'placeholder': 'Search Product', 'type': 'text', 'data-kt-ecommerce-product-filter': 'search'}}) }}
+
+																{{form_end(formC)}}
+															</form>
+														</div>
+														<!--end::Search-->
+											</div>
+													
+			{% if pagination is not null %}
+    {% for article in pagination %}
+																<tr>
+																			<div class="d-flex">
+																
+																	<div class="ms-5">
+																		<!--begin::Title-->
+																	<td>{{ article.nom }}</td>
+																	<td>{{ article.description }}</td>
+																	<td>{{ article.quantite }}</td>
+																	<td>{{ article.prix }}DT</td>
+																	<td>{% if article.image %}
+																	
+																		<img src="{{ asset('uploads/images/' ~  article.image) }}" style="max-width: 150px; max-height: 200px;"class="img-thumbnail"alt="Produit Image">
+																	{% endif %}</td>
+																	<td>{{ article.categorie.libelle }}</td>
+
+
+															<td class="text-end">
+		<div class="dropdown">
+			<button class="btn btn-sm btn-light btn-active-light-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+				Actions
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<li><a class="dropdown-item" href="{{ path('up_article', {'id': article.id}) }}">Edit</a></li>
+				<li><a class="dropdown-item" href="{{ path('del_article', {'id': article.id}) }}">Delete</a></li>
+			</ul>
+		</div>
+	</td>
+
+
+
+			
+				{% endfor %}
+
+
+													</tbody>
+													<!--end::Table body-->
+												</table>
+
+<!-- Pagination -->
+<div class="pagination">
+    {# Bouton Précédent #}
+    <a href="{{ path('list_article', {'page': currentPage - 1}) }}" class="btn btn-sm btn-primary me-2{% if currentPage <= 1 %} disabled{% endif %}">
+        Précédent
+    </a>
+
+    {# Bouton Suivant #}
+    <a href="{{ path('list_article', {'page': currentPage + 1}) }}" class="btn btn-sm btn-primary{% if currentPage >= pagination.pageCount %} disabled{% endif %}">
+        Suivant
+    </a>
+</div>
+								{% endif %}
+
+
+									<!--end::Table-->
+										</div>
+										<!--end::Card body-->
+									</div>
+									<!--end::Products-->
+								</div>
+								<!--end::Content container-->
+							</div>
+							<!--end::Content-->
+{% endblock %}
+
+	
+		
+		
+		
+		
+		{% block jsback %}
+
+		<!--end::Modals-->
+		<!--begin::Javascript-->
+		<script>var hostUrl = "assets/";</script>
+		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Vendors Javascript(used for this page only)-->
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<!--end::Vendors Javascript-->
+		<!--begin::Custom Javascript(used for this page only)-->
+		<script src="assets/js/custom/apps/ecommerce/catalog/products.js"></script>
+		<script src="assets/js/widgets.bundle.js"></script>
+		<script src="assets/js/custom/widgets.js"></script>
+		<script src="assets/js/custom/apps/chat/chat.js"></script>
+		<script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+		<script src="assets/js/custom/utilities/modals/create-app.js"></script>
+		<script src="assets/js/custom/utilities/modals/users-search.js"></script>
+		<script src="{{ asset('libs/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('js/sidebarmenu.js')}}"></script>
+<script src=".{{ asset('js/app.min.js')}}"></script>
+<script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+<script src="{{ asset('libs/simplebar/dist/simplebar.js')}}"></script>
+<script src="{{ asset('js/dashboard.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<!--begin::Javascript-->
+		
+		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Vendors Javascript(used for this page only)-->
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<!--end::Vendors Javascript-->
+		<!--begin::Custom Javascript(used for this page only)-->
+		<script src="assets/js/custom/apps/ecommerce/catalog/products.js"></script>
+		<script src="assets/js/widgets.bundle.js"></script>
+		<script src="assets/js/custom/widgets.js"></script>
+		<script src="assets/js/custom/apps/chat/chat.js"></script>
+		<script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+		<script src="assets/js/custom/utilities/modals/create-app.js"></script>
+		<script src="assets/js/custom/utilities/modals/users-search.js"></script>
+		<!--end::Custom Javascript-->
+		<!--end::Javascript-->
+		{% endblock %}
+	
+
+

@@ -1,0 +1,141 @@
+{# templates/calorie_calculator/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        {% block css %}
+
+            <link rel="stylesheet" href="{{ asset('../css/stylecal.css') }}" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+            <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet" href="{{ asset('$https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css') }}" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+
+            <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+            <style>
+                /* Additional CSS for the form design */
+                #pageintro {
+
+                    padding: 20px; /* Add padding to the container */
+                    text-align: center; /* Center-align text */
+                }
+
+                #pageintro article {
+                    margin-bottom: 20px; /* Add margin to the article */
+                }
+
+                #pageintro h2.heading {
+                    font-size: 55px; /* Set the font size for the heading */
+                    color: #2595d1; /* Set text color */
+                }
+
+                #pageintro p.heading {
+                    font-size: 25px; /* Set the font size for the paragraph */
+                    color: #68696f; /* Set text color */
+                    margin-top: 10px; /* Add margin to the top of the paragraph */
+                }
+
+                #pageintro ul.nospace.inline {
+                    list-style: none; /* Remove default list styles */
+                    padding: 0; /* Remove padding */
+                }
+
+                #pageintro ul.nospace.inline li {
+                    display: inline-block; /* Display list items inline */
+                    margin-right: 10px; /* Add margin between list items */
+                }
+
+                #pageintro footer {
+                    margin-top: 20px; /* Add margin to the top of the footer */
+                }
+                form {
+                    max-width: 400px;
+                    margin: auto;
+                    padding: 20px;
+                    background-color: #f8f9fa;
+                    border-radius: 8px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+
+                label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: bold;
+                }
+
+                input, select {
+                    width: 100%;
+                    padding: 10px;
+                    margin-bottom: 16px;
+                    border: 1px solid #ced4da;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                }
+
+                button {
+                    background-color: #007bff;
+                    color: #fff;
+                    padding: 10px 15px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+
+                h2 {
+                    color: #007bff;
+                }
+
+                /* Additional styles for your existing pageintro styles */
+                /* Add or modify as needed */
+            </style>
+        {% endblock %}
+    </head>
+
+    <body>
+
+    <div id="pageintro" class="hoc clear">
+        <article>
+
+            <h2 class="heading"><span class="block">Our Calorie Calculator</span></h2>
+            <footer>
+                <ul class="nospace inline pushright">
+                    <p class="heading">we're happy to present you our calorie calculator! Feel free to calculate.</p>
+                </ul>
+            </footer>
+        </article>
+    </div>
+
+    {# Display Form #}
+    <form method="post" action="{{ path('app_calorie_calculator') }}">
+        <h2>Calorie Calculator Form</h2>
+
+        <label for="weight">Weight (kg):</label>
+        <input type="text" name="weight" required>
+
+        <label for="height">Height (cm):</label>
+        <input type="text" name="height" required>
+
+        <label for="age">Age:</label>
+        <input type="text" name="age" required>
+
+        <label for="gender">Gender:</label>
+        <select name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+        <button type="submit">Calculate</button>
+        {# Display Results #}
+        {% if totalCalories is defined %}
+            <center><h2>Total Calories: {{ totalCalories }} calories</h2></center>
+        {% endif %}
+    </form>
+
+
+    </body>
+
+    </html>
+{% endblock %}

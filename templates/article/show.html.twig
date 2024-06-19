@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="container mt-20"> <!-- Ajout de la marge en haut -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow"> <!-- Ajout de l'ombre -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <!-- Affichage de l'image -->
+                            <img src="{{ asset('uploads/images/' ~ product.image) }}" class="img-fluid" alt="Product Image">
+                        </div>
+                        <div class="col-md-8">
+                            <!-- Affichage des détails du produit -->
+                            <h1 class="card-title">{{ product.nom }}</h1>
+                            <p class="card-text">{{ product.description }}</p>
+                            <p class="card-text">Prix:{{ product.prix }} DT</p>
+                            <div class="text-end mt-20"> <!-- Alignement à droite -->
+                                <!-- Ajoutez des boutons d'action ou des liens ici -->
+                                <a href="#" class="btn btn-primary">Acheter</a>
+                                <a <button class="add-to-cart-btn" data-product-id="{{ product.id }}">Add to Cart</button></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.getAttribute('data-product-id');
+
+                fetch(`/cart/add/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

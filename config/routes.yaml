@@ -1,0 +1,391 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+
+app_register:
+  path: /register
+  controller: App\Controller\RegistrationController::register
+
+app_registeradmin:
+  path: /registeradmin
+  controller: App\Controller\AdminregisterController::registeradmin
+
+
+
+search:
+  path: /search
+  controller: App\Controller\AdminregisterController::searchAction
+app_login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+
+app_adminlogin:
+  path: /adminlogin
+  controller: App\Controller\SecurityController::adminlogin
+
+logadmin:
+  path: /logadmin
+  controller: App\Controller\HomeController::logadmin
+
+email:
+  path: /email
+  controller: App\Controller\MailerController::sendEmail
+
+forgotpass:
+  path: /forgotpass
+  controller: App\Controller\RegistrationController::forgotpass
+forgotpassadmin:
+  path: /forgotpassadmin
+  controller: App\Controller\RegistrationController::forgotpassadmin
+forgotpassemail:
+  path: /forgotpassemail
+  controller: App\Controller\RegistrationController::forgotpassemail
+
+app_logout_success:
+  path: /logout/success
+  # Add any controller or use it as a placeholder since your LogoutListener will handle the logic
+
+home:
+  path: /home
+  controller: App\Controller\HomeController::home
+back:
+  path: /back
+  controller: App\Controller\HomeController::back
+  
+backk:
+  path: /backk
+  controller: App\Controller\ShopController::backk
+
+profileback:
+  path: /profileback
+  controller: App\Controller\HomeController::profileback
+app_home_redirect:
+  path: /
+  controller: App\Controller\HomeController::home
+  defaults:
+    path: /home
+    permanent: true
+user_update:
+  path: /user/update
+  controller: App\Controller\RegistrationController::updateUser
+  methods: ['GET', 'POST']
+
+updateself:
+  path: /admin/updateself
+  controller: App\Controller\AdminregisterController::updateadminself
+  methods: ['GET', 'POST']
+
+admin_update:
+  path: /admin/update/{id}
+  controller: App\Controller\AdminregisterController::updateAdmin
+  methods: ['GET', 'POST']
+get_user_details:
+  path: /get-user-details/{id}
+  controller: App\Controller\AdminregisterController::getUserDetails
+
+user_profile:
+  path: /user/update
+  controller: App\Controller\RegistrationController::updateUser
+
+useradd_list:
+  path: /users
+  controller: App\Controller\AdminregisterController::AddNewUser
+  methods: ['GET', 'POST']
+user_delete:
+  path: /user/delete/{id}
+  controller: App\Controller\AdminregisterController::deleteUser
+
+
+app_logout:
+  path: /logout
+  controller: App\Controller\SecurityController::logout
+
+api_login_check:
+  path: /api/login_check
+
+app_service:
+ path: /service
+ controller: App\Controller\ServiceController::index
+
+add_service:
+  path: /service/addService
+  controller: App\Controller\ServiceController::addService
+  methods: ['GET', 'POST']
+
+show_service:
+  path: /service/service{id}
+  controller: App\Controller\ServiceController::showService
+  methods: ['GET']
+
+show_pack:
+  path: /pack/pack{id}
+  controller: App\Controller\PackController::showPack
+
+add_pack:
+  path: /pack/addpack
+  controller: App\Controller\PackController::addPack
+
+our_packages:
+  path: /pack/ourpackages
+  controller: App\Controller\PackController::getOurPackages
+  methods: ['GET']
+
+show_all_services:
+  path: /service/showall
+  controller: App\Controller\ServiceController::showAllServices
+  
+show_all_pack:
+  path: /pack/showall
+  controller: App\Controller\PackController::showAllPacks
+
+edit_pack:
+  path: /pack/edit/{id}
+  controller: App\Controller\PackController::editPack
+  methods: ['GET', 'POST']
+
+edit_service:
+  path: /service/edit/{id}
+  controller: App\Controller\ServiceController::editService
+  methods: ['GET', 'POST']
+
+delete_pack:
+  path: /pack/delete/{id}
+  controller: App\Controller\PackController::deletePack
+
+delete_service:
+  path: /service/delete/{id}
+  controller: App\Controller\ServiceController::deleteService
+  
+get_pack_details:
+  path: /pack/get-pack-details/{id}
+  controller: App\Controller\PackController::getPackDetails
+  
+get_service_details:
+  path: /service/get-service-details/{id}
+  controller: App\Controller\ServiceController::getServiceDetails
+
+generate_pdf:
+  path: /service/pdf
+  controller: App\Controller\ServiceController::generatePdf
+
+user_stats:
+  path: /user_stats
+  controller: App\Controller\AdminregisterController::userStats
+
+send_chat:
+  path: /chat
+  controller: App\Controller\ChatgptController::chat
+chat:
+  path: /chatgpt
+  controller: App\Controller\ChatgptController::index
+weather:
+  path: /weather
+  controller: App\Controller\WeatherController::index
+
+
+app_messagerie:
+  path: /messagerie
+  controller: App\Controller\MessagerieController::messagerie
+sendmessage:
+  path: /sendmessage
+  controller: App\Controller\MessagerieController::sendmessage
+
+updatemessage:
+ path: /updatemessage/{id}
+ controller: App\Controller\MessagerieController::updatemessage
+deletemessage:
+ path: /deletemessage/{id}
+ controller: App\Controller\MessagerieController::deletemessage
+
+
+messagesreceived:
+ path: /messagesreceived
+ controller: App\Controller\MessagerieController::messagesreceived
+
+read:
+ path: /read/{id}
+ controller: App\Controller\MessagerieController::read
+
+calendar:
+    path: /calendar
+    controller: App\Controller\CalendarController::calendar
+avis:
+    path: /avis/{id}
+    controller: App\Controller\CalendarController::avis
+
+avis_ admin:
+    path: /avis_admin/{id}
+    controller: App\Controller\ListController::avis_admin
+deleteavis:
+    path: /deleteavis/{id}
+    controller: App\Controller\CalendarController::deleteavis
+
+addevent :
+  path: /addevent/{id}
+  controller: App\Controller\CalendarController::addevent
+
+index :
+ path: /index/{id}
+ controller: App\Controller\CalendarController::index
+partype :
+ path: /partype/{userId}
+ controller: App\Controller\CalendarController::partype
+stat :
+ path: /stat/{userId}
+ controller: App\Controller\CalendarController::stat
+
+updateevent:
+    path: /updateevent/{id}/{idevent}
+    controller: App\Controller\CalendarController::updateevent
+
+deleteevent:
+    path: /deleteevent/{id}/{idevent}
+    controller: App\Controller\CalendarController::deleteevent
+details:
+    path: /details/{id}
+    controller: App\Controller\CalendarController::details
+pdf:
+  path: /pdf/{id}
+  controller: App\Controller\CalendarController::pdf
+
+messagessent:
+ path: /messagessent
+ controller: App\Controller\MessagerieController::messagessent
+
+list:
+  path: /list
+  controller: App\Controller\ListController::list
+
+
+search_admin:
+  path: /search_admin
+  controller: App\Controller\ListController::search_admin
+searchh:
+  path: /searchh
+  controller: App\Controller\MessagerieController::searchh
+
+excel:
+  path: /excel
+  controller: App\Controller\ListController::excel
+indexadmin:
+  path: /indexadmin{id}
+  controller: App\Controller\ListController::indexadmin
+
+Admindetails:
+  path: /Admindetails/{id}
+  controller: App\Controller\ListController::Admindetails
+
+
+admin:
+ path: admin
+ controller: App\Controller\ListController::admin
+
+
+list_categorie:
+  path: /categorie
+  controller: App\Controller\CategorieController::index 
+ 
+  
+up_categorie:
+  path: /updatecategorie/update/{id}
+  controller: App\Controller\CategorieController::updateCategorie 
+add_categorie:
+  path: /adcategorie/add
+  controller: App\Controller\CategorieController::addCategorie 
+del_categorie:
+  path: /deletecategorie/{id}
+  controller: App\Controller\CategorieController::deleteCategorie 
+list_article :
+  path: /article
+  controller: App\Controller\ArticleController::index
+addarticle :
+  path: /addarticle/add
+  controller: App\Controller\ArticleController::addArticle 
+up_article:
+  path: /uparticle/update/{id}
+  controller: App\Controller\ArticleController::updateArticle
+del_article:
+  path: /deletearticle/{id}
+  controller: App\Controller\ArticleController::deleteArticle
+app_shop:
+  path: /shop
+  controller: App\Controller\ShopController::index
+app_dash:
+  path: /dash
+  controller: App\Controller\ShopController::list
+catalog_generate_pdf:
+    path: '/catalog/generate-pdf'
+    controller: 'App\Controller\CatalogController::generatePdfCatalog'
+app_calorie_calculator:
+  path: /caloriecalculator
+  controller: App\Controller\CalorieCalculatorController::index
+messagesmarked:
+  path: /messagesmarked
+  controller: App\Controller\MessagerieController::messagesmarked
+scan_qr:
+  path: /scan-qr
+  controller: App\Controller\QRCodeController::scanQR
+
+
+product_show:
+    path: '/product/{id}'
+    controller: 'App\Controller\ArticleController::show'
+
+search_article:
+    path: '/article/search'
+    controller: 'App\Controller\ArticleController::searchArticle'            
+
+search_sent:
+  path: /search_sent
+  controller: App\Controller\MessagerieController::search_sent
+search_marked:
+  path: /search_marked
+  controller: App\Controller\MessagerieController::search_marked
+app_cart :
+  path: /cart
+  controller: App\Controller\CartController::index
+
+
+app_cart_add:
+  path: /cart/add/{productId}
+  controller: App\Controller\CartController::addProduct
+  methods: ['POST']
+
+app_cart_remove:
+  path: /cart/remove/{productId}
+  controller: App\Controller\CartController::removeProduct
+  methods: ['DELETE']
+
+app_checkout:
+  path: /checkout
+  controller: App\Controller\CommandeController::checkout
+
+app_commande:
+  path: /commande
+  controller: App\Controller\CommandeController::index
+
+
+app_cart_update:
+  path: /cart/update/{productId}/{quantity}
+  controller: App\Controller\CartController::updateProductQuantity
+  methods: ['POST']
+
+app_commande_chart:
+  path: /commande/chart
+  controller: App\Controller\CommandeController::chart
+
+app_commande_export:
+  path: /commande/export
+  controller: App\Controller\CommandeController::export
+
+app_payment:
+  path: /payment
+  controller: App\Controller\PaymentController::index
+
+app_payment_confirm:
+  path: /payment/confirm
+  controller: App\Controller\PaymentController::confirm
+search_recived:
+  path: /search_recived
+  controller: App\Controller\MessagerieController::search_recived

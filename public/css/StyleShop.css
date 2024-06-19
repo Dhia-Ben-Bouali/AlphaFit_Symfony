@@ -1,0 +1,485 @@
+@import url('https://fonts.googleapis.com/css2?family=Goldman&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap');
+a {
+    text-decoration: none;
+}
+*
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    background-color: white;
+}
+
+header {
+    margin: auto;
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(26, 25, 25);
+}
+
+.logos {
+    margin-left: 3%;
+    position: relative;
+    margin-top: 1.2%;
+    font-family: Lobster, sans-serif;
+    font-size: 30px;
+    font-weight: 550;
+    color: rgb(255, 255, 255);
+    letter-spacing: 2pt;
+}
+
+header .logos span {
+    color: rgb(201, 158, 158);
+    font-size: 34;
+    font-weight: bold;
+}
+
+header input {
+    font-family: lobster, sans-serif;
+    transition: 0.6s;
+    position: relative;
+    width: 350px;
+    top: 25%;
+    left: 65%;
+    height: 50%;
+    justify-content: center;
+    border-radius: 20px;
+    color: rgb(255, 255, 255);
+    border: solid 1px gray;
+    padding-left: 5px;
+}
+
+header input:focus {
+    outline: none;
+    background-color: transparent;
+}
+
+header .search-button {
+    position: absolute;
+    background-color: transparent;
+    font-size: 30px;
+    margin-top: 1.43%;
+    border: none;
+    right: 13%;
+    z-index: 1;
+}
+
+header .links {
+    margin-top: 1.2%;
+    padding-right: 1.5%;
+    font-size: 30px;
+}
+
+header .links .fas {
+    color: white;
+}
+
+header .links .fas:hover {
+    color: rgb(201, 158, 158);
+}
+
+header .search-button .fas {
+    color: white;
+}
+
+header .search-button :hover {
+    color: rgb(201, 158, 158);
+}
+
+.panier-slider {
+    width: 0%;
+    position: fixed;
+    height: 94.3vh;
+    background-color: rgb(255, 255, 255);
+    opacity: 0.9;
+    text-align: center;
+    right: 0%;
+    z-index: 9999;
+    transition: 1s;
+}
+
+.panier-slider h2 {
+    font-family: Lobster, sans-serif;
+    color: rgb(37, 36, 36);
+    padding-top: 1.5%;
+    padding-bottom: 2%;
+    font-size: 40px;
+}
+
+#check:checked~.panier-slider {
+    width: 35%;
+    position: absolute;
+    right: 0;
+    transition: 1s;
+}
+
+#check {
+    display: none;
+}
+
+
+/*        ------------   */
+
+.navbar {
+    position: sticky;
+    width: 100%;
+    height: 10vh;
+    background-color: rgb(26, 25, 25);
+    border-bottom: solid 1px gray;
+    border-top: 1px solid rgb(139, 132, 132);
+    z-index: 2;
+}
+
+.navbar ul {
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+}
+
+.navbar li a {
+    justify-content: center;
+    display: flex;
+    font-family: goldman, sans-serif;
+    color: rgb(255, 255, 255);
+    letter-spacing: 1.3pt;
+    font-weight: 500px;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: 140px;
+    padding: 24px 30px;
+}
+
+.navbar li a:hover {
+    background-color: rgb(243, 234, 234);
+    color: rgb(201, 158, 158);
+}
+
+.navbar .nav-links {
+    background-color: rgb(243, 234, 234);
+    display: block;
+    line-height: 18px;
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.nav-links li a {
+    color: rgb(201, 158, 158);
+    font-weight: 500;
+    border-top: 1px solid rgb(69, 73, 78);
+}
+
+.nav-links li a:hover {
+    background-color: rgb(167, 129, 129);
+}
+
+.navbar li:hover .nav-links {
+    opacity: 1;
+    visibility: visible;
+}
+
+.slider {
+    position: relative;
+}
+
+.slider img {
+    margin: auto;
+    width: 100%;
+    height: 560px;
+    background-repeat: no-repeat;
+}
+
+.slider .text-img .x2 {
+    color: rgb(224, 172, 172);
+}
+
+.slider .text-img {
+    font-weight: bold;
+    font-family: lobster;
+    color: rgba(255, 255, 255, 0.877);
+    z-index: 1;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin-top: -35%;
+}
+
+.slider .text-img .T1 {
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    margin-right: 81%;
+}
+
+.slider .text-img .T2 {
+    font-size: 3.5em;
+    margin-bottom: 40px;
+}
+
+.slider .text-img .T3 {
+    text-decoration: underline;
+}
+
+.slider .text-img .slider-links {
+    margin-top: 25px;
+}
+
+.slider .text-img .slider-links a {
+    color: rgb(119, 151, 219);
+    padding: 12px 20px;
+    background-color: whitesmoke;
+    border-radius: 25px;
+}
+
+.slider .text-img .slider-links .sign {
+    background-color: rgb(119, 147, 209);
+    color: white;
+}
+
+.slider .text-img .slider-links a:hover {
+    background-color: rgb(119, 147, 209);
+    color: whitesmoke;
+}
+
+
+/*    ------------   ------------   ------------    */
+
+.prod {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 30px;
+    justify-items: center;
+}
+
+.card2 {
+    height: 300px; /* Définissez la hauteur fixe désirée pour toutes les cartes */
+    
+    background-color: rgba(255, 255, 255, 0.89);
+    border-radius: 10px;
+    padding: 8px;
+    margin: 50px;
+    border: none; /* Supprimez la bordure du bouton */
+    border-radius: 5px; /* Ajoutez des coins arrondis au bouton */
+    cursor: pointer; /* Changez le curseur au survol */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+    margin-bottom: 80px;
+    /* Ajoutez de la marge en bas de chaque carte */
+    margin-top: 70px;
+
+}
+.btn-add-to-cart {
+    background-color: #89b8e4; /* Couleur de fond du bouton */
+    color: white; /* Couleur du texte */
+    padding: 10px 20px; /* Espacement interne du bouton */
+    border: none; /* Supprimez la bordure du bouton */
+    border-radius: 5px; /* Ajoutez des coins arrondis au bouton */
+    cursor: pointer; /* Changez le curseur au survol */
+    font-size: 14px; /* Taille de la police */
+    margin-top: 5%;
+    transition: background-color 0.3s ease; /* Animation de transition */
+
+}
+
+.btn-add-to-cart:hover {
+    background-color: #45a049; /* Changez la couleur de fond du bouton au survol */
+}
+.card2 img {
+    max-width: 100%; /* Assurer que l'image ne dépasse pas la largeur de la card */
+    height: 77%; /* Permettre à la hauteur de s'ajuster proportionnellement */
+    margin-bottom: 15px; /* Espacement entre l'image et le texte */
+}
+
+.card2 p {
+    /*border-radius: 20%; /* Utilisez une valeur de 50% pour obtenir une forme ovale */
+
+    color: rgb(32, 116, 172);
+    width: 20%;
+    margin: auto;
+    margin-bottom: 8px;
+    justify-items: center;
+
+}
+
+.card2 a {
+    color: rgb(12, 0, 0);
+    font-size: 16px;
+    margin-left: 10%;
+
+    
+}
+
+.card2:hover {
+    transform: scale(1.05);
+}
+
+.items h2 {
+    font-family: goldman, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.advert1 {
+    margin-top: 1%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/prod/ad1.jpg);
+    background-attachment: fixed;
+    background-repeat: none;
+    background-size: cover;
+    clip-path: polygon(0 23%, 100% 0, 100% 100%, 0 100%);
+    height: 50vh;
+    width: 100%;
+}
+
+.advert1 .advert1-text,
+.advert2 .advert1-text {
+    padding-top: 6%;
+    text-align: center;
+}
+
+.advert1 .advert1-text h1,
+.advert2 .advert1-text h1 {
+    font-family: lobster, sans-serif;
+    font-weight: 100;
+    color: rgb(169, 218, 56);
+    padding-top: 3.5%;
+    margin-bottom: 2%;
+}
+
+.advert1 .advert1-text a,
+.advert2 .advert1-text a {
+    color: rgb(63, 62, 62);
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgb(169, 218, 56);
+    font-size: 1.5em;
+    border: 1px solid gray;
+}
+
+.advert1 .advert1-text a:hover,
+.advert2 .advert1-text a:hover {
+    background-color: transparent;
+    color: rgb(169, 218, 56);
+}
+
+.advert2 {
+    margin-top: 1%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../img/prod/adv2.jpg);
+    clip-path: polygon(0 0, 100% 23%, 100% 100%, 0 100%);
+    background-attachment: fixed;
+    background-repeat: none;
+    background-size: cover;
+    height: 50vh;
+    width: 100%;
+}
+
+footer {
+    margin-top: 2%;
+    padding-top: 1%;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 40vh;
+    background-color: black;
+}
+
+footer .bloc1 .links {
+    padding-top: 7%;
+    font-size: 2.3em;
+}
+
+footer .bloc1 .links a {
+    color: rgb(202, 206, 226);
+}
+
+footer .bloc1 .links .fb:hover {
+    color: rgb(0, 0, 253);
+}
+
+footer .bloc1 .links .inst:hover {
+    color: rgba(240, 6, 123, 0.979);
+    ;
+}
+
+footer .bloc1 .links .twt:hover {
+    color: rgb(0, 140, 255);
+}
+
+footer .bloc2 h2 {
+    padding-bottom: 1%;
+    padding-left: 15px;
+}
+
+footer .bloc2 a {
+    padding-top: 2%;
+    display: block;
+    font-size: 1.3em;
+    padding-bottom: 10px;
+    align-items: center;
+    color: rgb(202, 206, 226);
+}
+
+footer .bloc2 a i {
+    padding: 0 7px;
+}
+
+footer .bloc3 p {
+    color: rgb(202, 206, 226);
+}
+
+footer h2 {
+    color: white;
+    padding-bottom: 2%;
+}
+
+footer .bloc3 input {
+    transition: 0.6s;
+    position: relative;
+    width: 70%;
+    height: 18%;
+    justify-content: center;
+    color: rgb(202, 206, 226);
+    background-color: transparent;
+    border: none;
+    padding-left: 10px;
+    border-bottom: 1px solid white;
+}
+
+footer .bloc3 input:focus {
+    outline: none;
+    border-bottom: 1px solid snow;
+}
+
+footer .bloc2 a:hover {
+    color: rgb(130, 132, 148);
+}
+
+footer .bloc3 a {
+    color: rgb(202, 206, 226);
+    background-color: rgb(130, 132, 148);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 20px;
+    margin-top: 5%;
+}

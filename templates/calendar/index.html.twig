@@ -1,0 +1,135 @@
+{# index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %} Calendar{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <style>
+        #calendrier {
+            width: 90%;
+            margin: auto;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+{% endblock %}
+
+{% block content %}
+<div id="kt_app_content_container" class="app-container container-xxl">
+  <div class="card">
+    <div class="card-header card-header-stretch">
+      <!--begin::Title-->
+      <div class="card-title">
+        <a href="{{ path('addevent', {'id': id}) }}" class="btn btn-sm btn-primary align-self-center">Add to calendar</a>&nbsp&nbsp
+         <a href="{{ path('pdf', {'id': id}) }}" class="btn btn-sm btn-primary align-self-center">Print the to-do list for this week</a>&nbsp&nbsp
+        <a href="{{ path('avis', {'id': id}) }}" class="btn btn-sm btn-primary align-self-center">Your Avis</a>&nbsp&nbsp
+
+
+      </div>
+      <!--end::Title-->
+    </div>
+    <!--end::Header-->
+    <!--begin::Tab Content-->
+    <div id="kt_referred_users_tab_content" class="tab-content">
+      <div id="calendrier"></div>
+    </div>
+  
+
+
+    <!-- Include FullCalendar JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Your FullCalendar initialization script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let calendarElt = document.querySelector("#calendrier");
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+            initialView: 'timeGridWeek',
+            events: {{ data|raw }},
+            editable: true,
+            themeSystem: 'bootstrap',
+            eventResizableFromStart: true,
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            eventClick: function(info) {
+                // Récupérer l'ID de l'événement
+                let eventId = info.event.id;
+                console.log('Event ID:', eventId);
+
+                let existingPopup = document.querySelector("#eventPopup");
+                if (existingPopup) {
+                    existingPopup.remove();
+                }
+
+                // Créer le contenu HTML du nouveau popup avec les boutons
+                let popupContent = `
+                    <div class="modal fade" id="eventPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-blue" id="editProfileModalLabel">Options</h5>
+                                    <style>
+                                            .text-blue {
+                                                color: #007bff; 
+                                            }
+                                        </style>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <div class="mb-3">
+                                        
+                                        <h6 class="modal-title" id="editProfileModalLabel">You can consult details, make updates, or delete it.</h6>
+                                        
+                                    </div>
+                                   
+                                    <button type="button" class="btn btn-primary mx-2" onclick="updateEvent({{ id }}, ${eventId})">Update</button>
+                                    <button type="button" class="btn btn-primary mx-2" onclick="deleteEvent({{ id }}, ${eventId})">Delete</button>
+                                    <button type="button" class="btn btn-primary mx-2" onclick="details(${eventId})">Details</button>
+                                    
+
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-primary fs-bold px-6 form-control-transparent border-0 px-8 min-h-45px" data-bs-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Ajouter le popup au DOM
+                document.body.insertAdjacentHTML('beforeend', popupContent);
+
+                // Afficher le popup
+                $('#eventPopup').modal('show');
+                console.log('Event ID3:', eventId);
+            }
+        });
+
+        calendar.render();
+    });
+
+    function updateEvent(id, eventId) {
+        window.location.href = '/updateevent/' + id + '/' + eventId;
+        console.log('Event ID3mmm:', eventId);
+        
+    }
+
+    function deleteEvent(id, eventId) {
+        window.location.href = '/deleteevent/' + id + '/' + eventId;
+    }
+    function details(eventId) {
+        window.location.href = '/details/' + eventId ;
+    }
+</script>
+
+
+    		
+</div>
+
+{% endblock %}

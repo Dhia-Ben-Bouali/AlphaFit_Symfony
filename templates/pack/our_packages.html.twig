@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{% block css %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ asset('css/ourpackages.css') }}">
+		<link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('script.js') }}"></script>
+	
+    <style>
+        #pageintro {
+			
+			padding: 20px; /* Add padding to the container */
+			text-align: center; /* Center-align text */
+		}
+
+		#pageintro article {
+			margin-bottom: 20px; /* Add margin to the article */
+		}
+
+		#pageintro h2.heading {
+			font-size: 55px; /* Set the font size for the heading */
+			color: #2595d1; /* Set text color */
+		}
+
+		#pageintro p.heading {
+			font-size: 25px; /* Set the font size for the paragraph */
+			color: #68696f; /* Set text color */
+			margin-top: 10px; /* Add margin to the top of the paragraph */
+		}
+
+		#pageintro ul.nospace.inline {
+			list-style: none; /* Remove default list styles */
+			padding: 0; /* Remove padding */
+		}
+
+		#pageintro ul.nospace.inline li {
+			display: inline-block; /* Display list items inline */
+			margin-right: 10px; /* Add margin between list items */
+		}
+
+		#pageintro footer {
+			margin-top: 20px; /* Add margin to the top of the footer */
+		}
+
+
+    </style>
+{% endblock %}
+</head>
+
+<body>
+
+  <div id="pageintro" class="hoc clear"> 
+    <article>
+      
+      <h2 class="heading"><span class="block">Our Packages</span></h2>
+      <footer>
+        <ul class="nospace inline pushright">
+			<p class="heading">we're happy to present you the packages we have! Choose wisely and get started with us today.</p>
+        </ul>
+      </footer>
+    </article>
+  </div>
+
+
+ <div class="plans-container">
+    {% for pack in packs %}
+    <article class="plan [ card ]">
+		<div class="inner">
+
+			<span class="pricing">
+				<span>
+					{{pack.prix}}TND <small>/ m</small>
+				</span>
+			</span>
+			<h2 class="title">{{pack.nom}}</h2>
+			<p class="info">{{pack.description}}</p>
+			<ul class="features">
+                {% if pack.service is not empty %}
+                {% for service in pack.service %}
+				<li>
+					<span class="icon">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+							<path fill="none" d="M0 0h24v24H0z" />
+							<path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z" fill="currentColor" />
+						</svg>
+					</span>
+					<span><strong>{{service.nom}}</strong></span>
+				</li>
+                {% endfor %}
+                {% else %}
+                    <p>No services associated with this pack.</p>
+                {% endif %}
+			</ul>
+			<button class="button">
+				Buy this plan
+			</button>
+		</div>
+	</article>
+    {% endfor %}
+    </div>
+</body>
+
+</html>
+{% endblock %}

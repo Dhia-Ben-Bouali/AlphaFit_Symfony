@@ -1,0 +1,112 @@
+{% extends 'baseback.html.twig' %}
+{% block titreback %} Alpha Fit-Details {% endblock %}
+
+{% block bodyback %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <div class="container-fluid">
+        <div class="card w-100">
+            <div class="card-body p-4">
+                <div>
+                    <canvas id="myChart" class="custom-chart" width="400" height="400"></canvas>
+                </div>
+
+                <div class="mt-4">
+                    <p>Cette visualisation représente la répartition des cours par type. Les données sont basées sur le nombre de cours donnés par le nutritionniste et/ou le coach.</p>
+                </div>
+
+                <!-- Ajout de la liste déroulante -->
+                <div class="mt-3">
+                    <label for="formatSelect">Format :</label>
+                    <select id="formatSelect">
+                        <option value="png">PNG</option>
+                        <option value="jpeg">JPEG</option>
+                    </select>
+                </div>
+
+                <!-- Ajout du bouton pour enregistrer le graphique -->
+                <button class="btn btn-primary mt-3" onclick="saveChart()">Enregistrer le graphique</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Cours Nutritionniste', 'Cours Coach'],
+                datasets: [{
+                    data: [{{ nombreCoursNutritionniste }}, {{ nombreCoursCoach }}],
+                    backgroundColor: ['rgba(54, 162, 235, 0.8)', 'rgba(255, 99, 132, 0.8)'],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    text: 'Répartition des cours par type'
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                },
+            }
+        });
+
+        // Fonction pour enregistrer le graphique dans le format sélectionné
+        function saveChart() {
+            var formatSelect = document.getElementById('formatSelect');
+            var selectedFormat = formatSelect.options[formatSelect.selectedIndex].value;
+
+            html2canvas(document.getElementById('myChart')).then(function(canvas) {
+                var link = document.createElement('a');
+
+                if (selectedFormat === 'png') {
+                    link.href = canvas.toDataURL("image/png");
+                    link.download = 'repartition_cours.png';
+                } else if (selectedFormat === 'jpeg') {
+                    link.href = canvas.toDataURL("image/jpeg");
+                    link.download = 'repartition_cours.jpeg';
+                }
+
+                link.click();
+            });
+        }
+    </script>
+
+    <style>
+        .custom-chart {
+            max-width: 400px;
+            margin: auto;
+            display: block;
+        }
+
+        /* Style de la liste déroulante */
+        #formatSelect {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        /* Style du bouton */
+        .btn-save {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %} {% block titre %} Sign In {% endblock %} {% block css %}
+<!--begin::Vendor Stylesheets(used for this page only)-->
+<link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+<!-- Inclure RateYo depuis CDN -->
+<!--end::Vendor Stylesheets-->
+<style>
+  .yellow-star {
+    color: yellow;
+  }
+
+  .gray-star {
+    color: gray;
+  }
+
+  /* Ajout de styles pour aligner les étoiles horizontalement */
+  .rating {
+    font-size: 24px;
+    /* Ajustez la taille des étoiles selon vos besoins */
+    display: flex;
+  }
+</style> 
+{% endblock %}
+ {% block content %}
+<!--begin::details View-->
+<div class="card " id="kt_profile_details_view" style="margin-top: 80px ; margin-left: 180px; margin-right: 180px ;margin-bottom: 50px">
+  <!--begin::Card header-->
+  <div class="card-header cursor-pointer">
+        <!--begin::Card title-->
+        <div class="card-title m-0">
+           <h3 class="fw-bold m-0"> Avis</h3>
+        </div>
+        <!--end::Card title-->
+        <!--begin::Action-->
+        <!--end::Action-->
+  </div>
+  <!--begin::Card header-->
+  <!--begin::Card body-->
+  <div class="card-body p-9"> 
+    {% if avis is not null and avis.id is not null %}
+     {# Afficher le formulaire de mise à jour s'il existe un avis #}
+        <h2>Your current Avis</h2>
+       <div class="rating">
+    {# Afficher les étoiles en jaune/gris en fonction des valeurs de l'avis #}
+    {% for i in 1..5 %}
+        {% if attribute(avis, 'star' ~ i) %}
+            <span class="yellow-star bi bi-star-fill" style="margin-right: 200px;"></span>
+        {% else %}
+            <span class="gray-star bi bi-star" style="margin-right: 200px;"></span>
+        {% endif %}
+    {% endfor %}
+</div> <br>
+           <div id="kt_inbox_form_editor" class="bg-transparent border-0 h-20px px-3">
+    <div style="border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+      <div class="form-control form-control-transparent border-0 px-8 min-h-45px">  {{ avis.commentaire }}</div>
+
+
+
+    </div>
+
+</div>
+<br><br><br>
+<a href="{{ path('deleteavis', {'id': avis.id}) }}" class="btn btn-primary fs-bold px-6 form-control-transparent border-0 px-8 min-h-45px" onclick="return confirm('Are you sure you want to delete this Avis?')">Delete Your Avis</a>
+
+            <div class="card-header cursor-pointer">
+</div>
+    {# Reste du code pour le formulaire de mise à jour #} 
+<br>
+        <h2>Update your Avis</h2>
+
+   {{ form_start(form) }}
+    <div class="card-header cursor-pointer">
+      {{ form_widget(form.star1, {'attr': {'class': 'star-checkbox'}}) }} {{ form_widget(form.star2, {'attr': {'class': 'star-checkbox'}}) }} {{ form_widget(form.star3, {'attr': {'class': 'star-checkbox'}}) }} {{ form_widget(form.star4, {'attr': {'class': 'star-checkbox'}}) }} {{ form_widget(form.star5, {'attr': {'class': 'star-checkbox'}}) }} <div class="card-title m-0"></div>
+    </div>
+    <br>
+
+
+     <div id="kt_inbox_form_editor" class="bg-transparent border-0 h-20px px-3">
+    <div style="border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+      {{ form_widget(form.commentaire, {'attr': {'class': 'form-control form-control-transparent border-0 px-8 min-h-45px', 'placeholder': 'Write Here'}}) }}
+    </div>
+</div>
+    <div id="kt_inbox_form_editor" class="bg-transparent border-0 h-40px px-3">
+    </div>
+    <br>
+    <div class="btn-group me-4">
+      <!--begin::Submit-->
+      {{ form_widget(form.confirm, {'attr': {'class': 'btn btn-primary fs-bold px-6 form-control-transparent border-0 px-8 min-h-45px', 'placeholder': 'Send '}}) }}
+      <!--end::Submit-->
+      <!--begin::Send options-->
+      <!--end::Send options-->
+    </div>
+    {{ form_end(form) }} 
+     {% else %}
+
+
+
+
+
+
+      {# Afficher le formulaire d'ajout s'il n'existe pas d'avis #} <h2>Add your Avis</h2>
+    {{ form_start(form) }}
+    <div class="card-header cursor-pointer">
+      {{ form_widget(form.star1, {'attr': {'class': 'star-checkbox'}}) }} {{ form_widget(form.star2, {'attr': {'class': 'star-checkbox'}}) }} {{ form_widget(form.star3, {'attr': {'class': 'star-checkbox'}}) }} {{ form_widget(form.star4, {'attr': {'class': 'star-checkbox'}}) }} {{ form_widget(form.star5, {'attr': {'class': 'star-checkbox'}}) }} <div class="card-title m-0"></div>
+    </div>
+    <br>
+    <div id="kt_inbox_form_editor" class="bg-transparent border-0 h-200px px-3">
+      {{ form_widget(form.commentaire, {'attr': {'class': 'form-control form-control-transparent border-0 px-8 min-h-45px', 'placeholder': 'Write Here'}}) }}
+    </div>
+    <br>
+    <div class="btn-group me-4">
+      <!--begin::Submit-->
+      {{ form_widget(form.confirm, {'attr': {'class': 'btn btn-primary fs-bold px-6 form-control-transparent border-0 px-8 min-h-45px', 'placeholder': 'Send '}}) }}
+      <!--end::Submit-->
+      <!--begin::Send options-->
+      <!--end::Send options-->
+    </div>
+    {{ form_end(form) }} {% endif %}
+  </div>
+  <!--end::Card body-->
+</div>
+<!--end::details View--> {% endblock %}

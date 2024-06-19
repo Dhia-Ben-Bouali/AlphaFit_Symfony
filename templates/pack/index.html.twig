@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/styleshop.css') }}">
+    <script src="{{ asset('script.js') }}"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-image {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .description-tooltip {
+            visibility: hidden;
+            width: 200px;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover .description-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .add-to-cart-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1 style="color: #3498db;">Welcome to Our Online Store!</h1>
+<p style="color: #e74c3c;">SummerTime Promotion: Enjoy a 35% Discount on Exclusive Products!</p>
+
+
+    <div class="container"
+        <div class="cards-container">
+            {% for produit in produits %}
+                <div class="card" data-description="{{ produit.description }}">
+                    <img src="{{ asset('uploads/images/' ~ produit.image) }}" class="product-image" alt="{{ produit.nom }}">
+                    <h2>{{ produit.nom }}</h2>
+                    <p>{{ produit.description }}</p>
+                    <p>Price: ${{ produit.prix }}</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <div class="description-tooltip">{{ produit.description }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}

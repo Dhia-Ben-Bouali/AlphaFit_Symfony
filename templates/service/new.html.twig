@@ -1,0 +1,18 @@
+{# templates/service/new.html.twig #}
+
+{#{% extends 'base.html.twig' %}#}
+
+{% block title %}Add Service{% endblock %}
+
+{% block body %}
+    <h1>Add Service</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.nom) }}
+    {{ form_row(form.description) }}
+
+    <button type="submit">Submit</button>
+
+    {{ form_end(form) }}
+{% endblock %}

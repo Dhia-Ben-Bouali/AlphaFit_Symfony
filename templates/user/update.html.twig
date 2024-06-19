@@ -1,0 +1,29 @@
+{% block body %}
+    <h1>Update User Profile</h1>
+
+    {{ form_start(form) }}
+
+    <div class="mb-3">
+        {{ form_row(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_row(form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_row(form.adresse, {'attr': {'class': 'form-control', 'placeholder': 'Adresse'}}) }}
+    </div>
+
+    {% if 'ROLE_ADMIN' in app.user.roles %}
+        <div class="mb-3">
+            {{ form_row(form.salaire, {'attr': {'class': 'form-control', 'placeholder': 'Salaire'}}) }}
+        </div>
+    {% endif %}
+
+    <div class="mb-3">
+        {{ form_row(form.update, {'attr': {'class': 'btn btn-primary'}}) }}
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

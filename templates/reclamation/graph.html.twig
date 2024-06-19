@@ -1,0 +1,318 @@
+{% extends 'baseback.html.twig' %}
+{% block css %}
+    <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('media/logos/alphalogo.png')}}" />
+    <link rel="stylesheet" href="{{ asset('/css/styles.min.css')}}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>   
+        .chart-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            box-sizing: border-box;
+            height:500px;  
+        }
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+    .delete-button {
+        background-color: #ff6347;
+        color: #fff; 
+        border: none; 
+        padding: 6px 12px;
+        border-radius: 3px; 
+        cursor: pointer; 
+        font-size: 14px; 
+        transition: background-color 0.3s ease; 
+    }
+    .delete-button:hover {
+        background-color: #cc0000; 
+    }
+    input[type="text"] {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    margin-bottom: 10px;
+    }
+
+    input[type="text"]:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px #007bff;
+    }
+
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+.pagination span,
+.pagination a {
+    padding: 6px 12px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+
+.pagination .current {
+    background-color: #009EF7;
+    color: #fff;
+    border-color: #009EF7;
+}
+
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+
+.pagination .next a:after {
+    content: 'Next';
+}
+
+/* Replace "<" with text */
+.pagination .prev a:after {
+    content: 'Pre';
+}
+
+
+button[type="submit"] {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.formedate {
+    margin: 10px;
+}
+
+#reclamationTable th a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        margin-right: 10px;
+}
+
+#searchDate {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#searchDate:focus {
+    border-color: #009EF7;
+}
+
+/* Style for the select dropdown */
+#searchEtat {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Style for the option elements */
+#searchEtat option {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Hover effect for options */
+#searchEtat option:hover {
+    background-color: #f0f0f0;
+}
+    </style>
+{% endblock %}
+
+{% block bodyback %}
+
+        <!--end::Header container-->
+    <div class="card mb-5 mb-xl-8">
+        <!--begin::Header-->
+        <div class="card-header border-0 pt-5" style="margin-top: 50px">
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-title fw-semibold">Reclamation List</span>
+            </h3>
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="card-body py-3" >
+            <div class="chart-container">
+        <canvas id="reclamationChart"></canvas>
+    </div>
+
+    <script>
+        // Parse the data passed from the controller
+        var labels = {{ labels|raw }};
+        var values = {{ values|raw }};
+
+        // Create a new Chart object
+        var ctx = document.getElementById('reclamationChart').getContext('2d');
+        var reclamationChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Number of Reclamations',
+                    data: values,
+                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            precision: 0,
+                            fontColor: '#333' // Customize font color
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Number of Reclamations',
+                            fontColor: '#333' // Customize font color
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: '#333' // Customize font color
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Date',
+                            fontColor: '#333' // Customize font color
+                        },
+                        gridLines: {
+                            display: false // Hide x-axis grid lines
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: 'Reclamations Added by Date',
+                    fontSize: 18,
+                    fontColor: '#333' // Customize font color
+                }
+            }
+        });
+    </script>
+<div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_user_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bold">Add User</h2>
+                        <!--end::Modal title-->
+
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+        </div>
+        <!--end::Modal - Add task-->
+        <!--begin::Body-->
+        <!-- Edit Profile Modal -->
+        <div class="modal fade" id="AddUserModal" tabindex="-1" aria-labelledby="AddUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AddUserModalLabel">Edit Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Modal Body with the form -->
+                    <div class="modal-body">
+                        <span id="userId"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+{% endblock %}
+{% block jsback %}
+    <script src="{{ asset('/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{ asset('/plugins/global/plugins.bundle.js')}}"></script>
+    <script src="{{ asset('/js/scripts.bundle.js')}}"></script>
+    <!--end::Global Javascript Bundle-->
+
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('/js/custom/landing.js')}}"></script>
+    <script src="{{ asset('js/custom/pages/pricing/general.js')}}"></script>
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <!--end::Vendors Javascript-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('js/custom/pages/user-profile/general.js')}}"></script>
+    <script src="{{ asset('js/widgets.bundle.js')}}"></script>
+    <script src="{{ asset('js/custom/widgets.js')}}"></script>
+    <script src="{{ asset('js/custom/apps/chat/chat.js')}}"></script>
+    <script src="{{ asset('js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        
+
+
+    <script src="{{ asset('/libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{ asset('/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('/js/sidebarmenu.js')}}"></script>
+    <script src=".{{ asset('/js/app.min.js')}}"></script>
+    <script src="{{ asset('/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{ asset('/libs/simplebar/dist/simplebar.js')}}"></script>
+    <script src="{{ asset('/js/dashboard.js')}}"></script>
+{% endblock %}

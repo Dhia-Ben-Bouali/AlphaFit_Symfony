@@ -1,0 +1,517 @@
+
+
+{% extends 'baseback.html.twig' %}
+{% block css %}
+    <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('media/logos/alphalogo.png')}}" />
+    <link rel="stylesheet" href="{{ asset('css/styles.min.css')}}" />
+
+{% endblock %}
+
+{% block bodyback %}
+    <!--end::Header container-->
+    <div class="card mb-5 mb-xl-8" style="margin-left: 40px;margin-right: 40px">
+        <!--begin::Header-->
+        <div class="card-header border-0 pt-5" style="margin-top: 50px">
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-title fw-semibold">Users List</span>
+
+            </h3>
+
+
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="card-body py-3" >
+            <!--begin::Table container-->
+            <div class="table-responsive">
+                <!--begin::Table-->
+
+                <table class="table align-middle gs-0 gy-4">
+                    <!--begin::Table head-->
+                    <div class="d-flex align-items-center mb-2">
+                        <form id="searchForm" action="{{ path('useradd_list') }}" method="get" class="mb-3 me-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="q" placeholder="Search" value="{{ searchQuery }}">
+                                <button type="submit" class="btn btn-outline-secondary">Search</button>
+                            </div>
+                        </form>
+
+                        <div class="input-group" style="max-width: 180px;">
+                            <label for="roleFilter" class="me-2 input-group-text" style="background-color: #009EF7; color: white">Filter by Role:</label>
+                            <select id="roleFilter" class="form-select form-select-sm" onchange="filterByRole()"  > <!-- Adjust the max-width value as needed -->
+                                <option value="" {% if not selectedRole %}selected{% endif %}>All</option>
+                                <option value="ROLE_USER" {% if selectedRole == 'ROLE_USER' %}selected{% endif %}>User</option>
+                                <option value="ROLE_ADMIN" {% if selectedRole == 'ROLE_ADMIN' %}selected{% endif %}>Admin</option>
+                                <option value="ROLE_NUTRITIONIST" {% if selectedRole == 'ROLE_NUTRITIONIST' %}selected{% endif %}>Nutritionist</option>
+                                <option value="ROLE_COACH" {% if selectedRole == 'ROLE_COACH' %}selected{% endif %}>Coach</option>
+                            </select>
+                        </div>
+
+
+
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon1" style="width: 140px;margin-left: 20px" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-plus-fill" viewBox="0 0 16 16">
+                                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0"/>
+                            </svg>
+                            <!--end::Svg Icon-->
+                            Add
+                        </button>
+                    </div>
+
+                    <!--end::Table head-->
+
+                    <!--end::Table head-->
+
+                    <!--end::Table head-->
+
+
+                    <thead>
+                    <tr class="fw-bold text-white  " style="background-color: #009EF7">
+                        <th class="ps-4 min-w-100px rounded-start">Last Name</th>
+                        <th class="min-w-125px">First Name</th>
+                        <th class="min-w-125px">Location</th>
+                        <th class="min-w-200px">Email</th>
+                        {#                        <th class="min-w-200px">Role</th>#}
+                        <th class="min-w-200px text-center rounded-end">Actions</th>
+                    </tr>
+                    </thead>
+                    <!--end::Table head-->
+                    <!--begin::Table body-->
+                    <tbody id="tableBody">
+
+                    {% for user in users %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{ user.nom }}</a>
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#" class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ user.prenom }}</a>
+
+                            </td>
+                            <td>
+                                <a href="#" class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ user.adresse }}</a>
+
+                            </td>
+                            <td>
+                                <a href="#" class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ user.email }}</a>
+
+                            </td>
+
+
+                            <td class="text-end">
+                                <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4 me-2" data-bs-toggle="modal" data-bs-target="#userDetailsModal{{ user.id }}">View</a>
+                                <div class="modal fade" id="userDetailsModal{{ user.id }}" tabindex="-1" aria-labelledby="userDetailsModalLabel{{ user.id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h7 class="modal-title" id="userDetailsModalLabel{{ user.id }}" style="font-size: x-large;color: black">User Details</h7>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p id="user-name" class="text-start" style="color: black;font-size: medium">Name:<p>
+                                                        <p id="user-name" class="text-start" style="color: black;font-size: medium">Address:<p>
+                                                        <p id="user-name" class="text-start" style="color: black;font-size: medium">Email:<p>
+                                                        <p id="user-name" class="text-start" style="color: black;font-size: medium">Roles:<p>
+                                                        <p id="user-name" class="text-start" style="color: black;font-size: medium">Salaire:<p>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p id="user-name" class="text-start" style="color: black;font-size: medium">{{ user.nom }} {{ user.prenom }}</p>
+                                                        <p id="user-address" class="text-start" style="color: black;font-size: medium">{{ user.adresse }}</p>
+                                                        <p id="user-email" class="text-start" style="color: black;font-size: medium">{{ user.email }}</p>
+                                                        <p id="user-roles" class="text-start" style="color: black;font-size: medium">{{ user.roles | join(', ') }}</p>
+                                                        <p id="user-email" class="text-start" style="color: black;font-size: medium">{{ user.salaire }}</p>
+                                                    </div>
+                                                </div>
+                                                <!-- Add more details as needed -->
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="background-color: #009ef7">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <a href="#" class="btn btn-sm btn-primary align-self-center edit-user" data-bs-toggle="modal" data-bs-target="#AddUserModal" data-user-id="{{ user.id }}" style="background-color: #009EF7">Edit User</a>
+                                <form action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this user?');" class="btn   btn-sm px-4 me-2" >
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    <button type="submit" class="btn btn-sm btn-primary align-self-center"  style="background-color: #009EF7">Delete</button>
+                                </form>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <!--end::Table body-->
+                </table>
+                <!-- Display pagination buttons -->
+                <div class="d-flex justify-content-between mt-4">
+                    {% if currentPage > 1 %}
+                        <a href="{{ path('useradd_list', {'page': currentPage - 1, 'q': searchQuery}) }}" class="btn btn-outline-secondary">Previous</a>
+                    {% endif %}
+
+                    {% if currentPage < totalPages %}
+                        <a href="{{ path('useradd_list', {'page': currentPage + 1, 'q': searchQuery}) }}" class="btn btn-outline-secondary">Next</a>
+                    {% endif %}
+                </div>
+
+
+            </div>
+            <!--end::Table container-->
+
+        </div>
+        <!-- Modal -->
+        <!--begin::Modal - Add task-->
+        <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_user_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bold">Add User</h2>
+                        <!--end::Modal title-->
+
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" action="{{ path('useradd_list') }}" method="post">
+
+                            {{ form_start(adminreg) }}
+                            {{ form_row(adminreg.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+                            {{ form_row(adminreg.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prenom'}}) }}
+                            {{ form_row(adminreg.adresse, {'attr': {'class': 'form-control', 'placeholder': 'Adress'}}) }}
+                            {{ form_row(adminreg.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                            {{ form_row(adminreg.password, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+
+                            {{ form_row(adminreg.confirmPassword, {'attr': {'class': 'form-control', 'placeholder': 'Confirm Password'}}) }}
+
+                            {{ form_row(adminreg.salaire, {'attr': {'class': 'form-control', 'placeholder': 'Salaire'}}) }}
+                            {{ form_row(adminreg.roles, {'attr': {'class': 'form-control role-radio-buttons'}}) }}
+
+                            {{ form_row(adminreg.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                            {{ form_widget(adminreg._token, {'attr': {'style': 'display: none;' }}) }}
+
+                            {{ form_end(adminreg) }}
+                        </form>
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+        </div>
+        <!--end::Modal - Add task-->
+        <!--begin::Body-->
+        <!-- Edit Profile Modal -->
+        <div class="modal fade" id="AddUserModal" tabindex="-1" aria-labelledby="AddUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AddUserModalLabel">Edit Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Modal Body with the form -->
+                    <div class="modal-body">
+                        <span id="userId"></span>
+
+                        <form method="post" action="{{ path('admin_update', {'id': 0}) }}" id="editUserForm" novalidate>
+                            <div class="mb-3">
+                                <label for="adminreg_nom" class="form-label">Nom</label>
+                                <input type="text" id="adminreg_nom" name="adminreg[nom]" class="form-control" value="" required />
+                                <div id="nom-error" class="error-message"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="adminreg_prenom" class="form-label">Prénom</label>
+                                <input type="text" id="adminreg_prenom" name="adminreg[prenom]" class="form-control" placeholder="Prénom" required />
+                                <div id="prenom-error" class="error-message"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="adminreg_adresse" class="form-label">Adresse</label>
+                                <input type="text" id="adminreg_adresse" name="adminreg[adresse]" class="form-control" placeholder="Adresse" required />
+                                <div id="adresse-error" class="error-message"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="adminreg_email" class="form-label">Email</label>
+                                <input type="email" id="adminreg_email" name="adminreg[email]" class="form-control" placeholder="Email" required />
+                                <div id="email-error" class="error-message"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="adminreg_password" class="form-label">Password</label>
+                                <input type="password" id="adminreg_password" name="adminreg[password]" class="form-control" placeholder="Password" />
+                                <div id="password-error" class="error-message"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="adminreg_salaire" class="form-label">Salaire</label>
+                                <input type="text" id="adminreg_salaire" name="adminreg[salaire]" class="form-control" placeholder="Salaire"  />
+                                <div id="salaire-error" class="error-message"></div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <span style="color: white;">{{ csrf_token('admin_update') }}</span>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block jsback %}
+    <script src="{{ asset('/plugins/global/plugins.bundle.js')}}"></script>
+    <script src="{{ asset('/js/scripts.bundle.js')}}"></script>
+    <!--end::Global Javascript Bundle-->
+
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('/js/custom/landing.js')}}"></script>
+    <script src="{{ asset('js/custom/pages/pricing/general.js')}}"></script>
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <!--end::Vendors Javascript-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('js/custom/pages/user-profile/general.js')}}"></script>
+    <script src="{{ asset('js/widgets.bundle.js')}}"></script>
+    <script src="{{ asset('js/custom/widgets.js')}}"></script>
+    <script src="{{ asset('js/custom/apps/chat/chat.js')}}"></script>
+    <script src="{{ asset('js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const editButtons = document.querySelectorAll('.edit-user');
+            const form = document.getElementById('editUserForm');
+            const modal = new bootstrap.Modal(document.getElementById('AddUserModal'));
+
+            function validateForm() {
+                // Clear all existing error messages
+                document.querySelectorAll('.error-message').forEach(error => {
+                    error.textContent = '';
+                });
+
+                let isValid = true;
+
+                // Example: Check if the nom field is empty
+                const nomInput = document.getElementById('adminreg_nom');
+                const nomValue = nomInput.value.trim();
+                if (nomValue === '') {
+                    displayErrorMessage(nomInput, 'Nom is required.');
+                    isValid = false;
+                }
+
+                // Check the prenom field
+                const prenomInput = document.getElementById('adminreg_prenom');
+                const prenomValue = prenomInput.value.trim();
+                if (prenomValue === '') {
+                    displayErrorMessage(prenomInput, 'Prénom is required.');
+                    isValid = false;
+                }
+
+                // Check the adresse field
+                const adresseInput = document.getElementById('adminreg_adresse');
+                const adresseValue = adresseInput.value.trim();
+                if (adresseValue === '') {
+                    displayErrorMessage(adresseInput, 'Adresse is required.');
+                    isValid = false;
+                }
+
+                // Check the email field
+                const emailInput = document.getElementById('adminreg_email');
+                const emailValue = emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailValue === '' || !emailRegex.test(emailValue)) {
+                    displayErrorMessage(emailInput, 'Please enter a valid email address.');
+                    isValid = false;
+                }
+
+                // Add more validation checks for other fields as needed
+
+                return isValid; // Submit the form if all validations pass
+            }
+
+
+            // Function to display error messages under the input fields
+            function displayErrorMessage(input, message) {
+                const errorContainer = input.parentElement.querySelector('.error-message');
+                errorContainer.textContent = message;
+            }
+
+            editButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const userId = this.getAttribute('data-user-id');
+
+                    // Update the form action with the user ID
+                    form.action = "{{ path('admin_update', {'id': 0})|raw }}".replace('0', userId);
+
+                    // Optionally, you can display the user ID in the modal
+                    document.getElementById('userId').innerText = 'User ID: ' + userId;
+
+                    // Fetch user details via AJAX
+                    fetch("{{ path('get_user_details', {'id': 0})|raw }}".replace('0', userId), {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data); // Check if data is received properly
+                            // Update form fields with user details
+                            form.querySelector('#adminreg_nom').value = data.nom;
+                            form.querySelector('#adminreg_prenom').value = data.prenom;
+                            form.querySelector('#adminreg_adresse').value = data.adresse;
+                            form.querySelector('#adminreg_email').value = data.email;
+                            form.querySelector('#adminreg_password').value = ''; // Clear the password field
+                            form.querySelector('#adminreg_salaire').value = data.salaire;
+                            // Note: Adjust the field names based on your Symfony form structure
+                        })
+                        .catch(error => console.error('Error fetching user details:', error));
+
+                    // Attach form submission handler
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault(); // Prevent the default form submission
+
+                        // Call the validation function before submitting
+                        if (!validateForm()) {
+                            return;
+                        }
+
+                        // You can add additional validation or confirmation logic here if needed
+
+                        // Create a FormData object and append the CSRF token
+                        const formData = new FormData(form);
+                        formData.append('{{ csrf_token('admin_update') }}', '1'); // Replace '1' with your actual CSRF token
+
+                        // Submit the form
+                        fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                        })
+                            .then(response => {
+                                console.log('Response Status:', response.status);
+                                if (response.ok) {
+                                    console.log('Form submitted successfully!');
+                                    modal.hide(); // Optionally, you can perform additional actions after successful form submission
+                                    location.reload();
+                                } else {
+                                    console.error('Form submission failed.');
+                                }
+                            })
+                            .catch(error => console.error('Error submitting form:', error));
+                    });
+                });
+            });
+        });
+    </script>
+
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var radioButtons = document.querySelectorAll('.role-radio-buttons input[type="radio"]');
+
+            radioButtons.forEach(function (radioButton) {
+                radioButton.addEventListener('change', function () {
+                    if (radioButton.checked) {
+                        radioButtons.forEach(function (otherRadioButton) {
+                            if (otherRadioButton !== radioButton) {
+                                otherRadioButton.checked = false;
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+    <script src="{{ asset('libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('js/sidebarmenu.js')}}"></script>
+    <script src=".{{ asset('js/app.min.js')}}"></script>
+    <script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{ asset('libs/simplebar/dist/simplebar.js')}}"></script>
+    <script src="{{ asset('js/dashboard.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var form = $('#searchForm');
+            var input = form.find('input[name="q"]');
+            var tableBody = $('#tableBody');
+
+            // Attach a keyup event handler to the input
+            input.on('keyup', function () {
+                // Perform an AJAX request to update the table results
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: form.serialize(), // Serialize the form data
+                    success: function (data) {
+                        // Replace the content of the table body with the response
+                        tableBody.html(data);
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+
+    </script>
+    {{ parent() }}
+    <script>
+        function filterByRole() {
+            try {
+                // Update the URL to include the selected role
+                let selectedRole = document.getElementById('roleFilter').value;
+                let url = new URL('{{ path('useradd_list') }}', window.location.href);  // Provide the base URL
+
+                // Set the search params only if a role is selected
+                if (selectedRole) {
+                    url.searchParams.set('role', selectedRole);
+                } else {
+                    // If no role is selected, remove the 'role' parameter from the URL
+                    url.searchParams.delete('role');
+                }
+
+                // Redirect to the updated URL
+                window.location.href = url.toString();
+            } catch (error) {
+                console.error('Error updating URL:', error);
+            }
+        }
+    </script>
+    <script src="{{ asset('libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('js/sidebarmenu.js')}}"></script>
+    <script src=".{{ asset('js/app.min.js')}}"></script>
+    <script src="{{ asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{ asset('libs/simplebar/dist/simplebar.js')}}"></script>
+    <script src="{{ asset('js/dashboard.js')}}"></script>
+{% endblock %}

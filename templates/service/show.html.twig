@@ -1,0 +1,66 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Service Details{% endblock %}
+
+{% block css %}
+    {{ parent() }} {# Include the styles from the parent template #}
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .service-details-container {
+            max-width: 800px;
+            margin: 20px auto; /* Adjusted margin */
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff; /* Bootstrap primary color */
+            text-align: center;
+        }
+
+        .service-description {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-top: 10px; /* Adjusted margin-top */
+        }
+
+        .back-to-list-btn {
+            display: block;
+            margin-top: 15px; /* Adjusted margin-top */
+            text-align: center;
+        }
+
+        .back-to-list-btn a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block bodyback %}
+    <div class="service-details-container">
+        <h1>Service Details</h1>
+
+        <p class="service-description">
+            <strong>Name: {{ service.nom }}</strong><br>
+            <strong>Description:</strong><br>{{ service.description }}
+        </p>
+
+        <div class="back-to-list-btn">
+            <a href="{{ path('show_all_services') }}">Back to List</a>
+        </div>
+    </div>
+{% endblock %}

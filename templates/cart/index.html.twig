@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<section class="h-100 h-custom" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <h5 class="mb-3"><a href="{{ path('app_shop') }}" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
+                        <hr>
+                        <div class="mb-4">
+                            <p class="mb-1">Shopping cart</p>
+                            <p class="mb-0">You have {{ cart|length }} items in your cart</p>
+                        </div>
+                        {% if cart is not empty %}
+                            {% for lineItem in cart %}
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div>
+                                                    <img src="{{ asset('uploads/images/' ~ lineItem.getArticle().getImage()) }}" class="img-fluid rounded-3" alt="Shopping item" style="width: 200px;">
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h5>{{ lineItem.getArticle().getNom() }}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div style="width: 50px;">
+                                                    <input type="number" class="quantity-input" data-product-id="{{ lineItem.getArticle().getId() }}" data-product-price="{{ lineItem.getArticle().getPrix() }}" value="{{ lineItem.getQuantite() }}" min="1">
+                                                </div>
+                                                <div style="width: 80px;">
+                                                    <h5 class="mb-0">$<span class="line-item-total">{{ lineItem.getQuantite() * lineItem.getArticle().getPrix() }}</span></h5>
+                                                </div>
+                                                <form action="{{ path('app_cart_remove', {'productId': lineItem.getArticle().getId()}) }}" method="post">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            
+                            <!-- Place the Checkout Form Here -->
+                            <div class="card bg-primary text-white rounded-3 mt-4">
+                                <div class="card-body">
+                                    <h4 class="mb-4">Checkout</h4>
+                                    {{ form_start(checkoutForm, {'attr': {'class': 'checkout-form'}}) }}
+                                    <div class="mb-3">
+                                        {{ form_row(checkoutForm.firstName) }}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ form_row(checkoutForm.lastName) }}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ form_row(checkoutForm.address) }}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ form_row(checkoutForm.phoneNumber) }}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ form_row(checkoutForm.paymentType) }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <p>Total: $<span id="cart-total">{{ app.session.get('cartTotal') }}</span></p>
+                                    </div>
+                                    <div class="d-grid">
+                                        {{ form_row(checkoutForm.submit) }}
+                                    </div>
+                                    {{ form_end(checkoutForm) }}
+                                </div>
+                            </div>
+                            <!-- End of Checkout Form -->
+
+                        {% else %}
+                            <p>Your cart is empty.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('change', function () {
+            const productId = this.dataset.productId;
+            const quantity = this.value;
+            const price = this.dataset.productPrice;
+            const lineTotalElement = this.closest('.d-flex').querySelector('.line-item-total');
+            const newLineTotal = quantity * price;
+
+            // Update line total on the page
+            lineTotalElement.textContent = newLineTotal.toFixed(2);
+
+            // Send the new quantity to the server
+            fetch(`/cart/update/${productId}/${quantity}`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json',
+                    // Include CSRF token if necessary
+                },
+                body: JSON.stringify({ quantity: quantity })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    // Update the total on the page
+                    document.getElementById('cart-total').textContent = data.newTotal.toFixed(2);
+                }
+            })
+            .catch(error => console.error('Error updating quantity:', error));
+        });
+    });
+});
+</script>
+
+{% endblock %}

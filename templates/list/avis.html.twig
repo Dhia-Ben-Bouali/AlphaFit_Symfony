@@ -1,0 +1,60 @@
+{% extends 'baseback.html.twig' %}
+{% block titreback %} Alpha Fit-Details {% endblock %}
+
+{% block bodyback %}
+   <style>
+  .yellow-star {
+    color: yellow;
+  }
+
+  .gray-star {
+    color: gray;
+  }
+
+  /* Ajout de styles pour aligner les étoiles horizontalement */
+  .rating {
+    font-size: 24px;
+    /* Ajustez la taille des étoiles selon vos besoins */
+    display: flex;
+  }
+</style> 
+
+    <div class="container-fluid">
+        <div class="card w-100">
+            <div class="card-body p-4">
+                
+
+                
+            <div class="rating">
+    {# Afficher les étoiles en jaune/gris en fonction des valeurs de l'avis #}
+    {% for i in 1..5 %}
+        {% if attribute(avis, 'star' ~ i) %}
+            <span class="yellow-star bi bi-star-fill" style="margin-right: 200px;"></span>
+        {% else %}
+            <span class="gray-star bi bi-star" style="margin-right: 200px;"></span>
+        {% endif %}
+    {% endfor %}
+</div> <br><br>
+           <div id="kt_inbox_form_editor" class="bg-transparent border-0 h-20px px-3">
+    <div style="border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+      <div class="form-control form-control-transparent border-0 px-8 min-h-45px">  {{ avis.commentaire }}</div>
+
+
+
+    </div>
+
+</div>
+                <!-- Ajout de la liste déroulante -->
+               
+
+                <!-- Ajout du bouton pour enregistrer le graphique -->
+            </div>
+        </div>
+    </div>
+
+    
+
+               
+   
+
+{% endblock %}

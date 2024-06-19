@@ -1,0 +1,34 @@
+{% extends 'user/list.html.twig' %}
+{% block add %}
+<a href="#" class="btn btn-sm btn-primary align-self-center" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body with the form -->
+            <div class="modal-body">
+
+                    {{ form_start(adminreg, {'attr': {'method': 'post', 'action': path('app_registeradmin')}}) }}
+
+                    {{ form_row(adminreg.nom, {'label': 'Name'}) }}
+                    {{ form_row(adminreg.prenom, {'label': 'First Name'}) }}
+                    {{ form_row(adminreg.adresse, {'label': 'Address'}) }}
+                    {{ form_row(adminreg.email, {'label': 'Email'}) }}
+
+                    Add more form fields as needed, and customize labels accordingly
+
+                    {{ form_row(adminreg.password, {'label': 'Password'}) }}
+
+                    {{ form_widget(adminreg.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                    {{ form_end(adminreg) }}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

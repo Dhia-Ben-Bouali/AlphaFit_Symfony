@@ -1,0 +1,36 @@
+
+
+{% for commande in commandes %}
+    <tr>
+        
+        <td class="border-bottom-0">
+            <p class="mb-0 fw-normal">{{ commande.date ? commande.date.format('Y-m-d') : 'N/A' }}</p>
+        </td>
+        <td class="border-bottom-0">
+            <h6 class="fw-semibold mb-1">{{ commande.firstName }}</h6>
+        </td>
+        <td class="border-bottom-0">
+            <h6 class="fw-semibold mb-1">{{ commande.lastName }}</h6>
+        </td>
+        <td class="border-bottom-0">
+            <p class="mb-0 fw-normal">{{ commande.Address }}</p>
+        </td>
+        <td class="border-bottom-0">
+            <p class="mb-0 fw-normal">{{ commande.phoneNumber }}</p>
+        </td>
+        
+        <td class="border-bottom-0">
+            <h6 class="fw-semibold mb-0 fs-4">${{ commande.totale }}</h6>
+        </td>
+        <td class="border-bottom-0" colspan="5">
+            <ul>
+                {% for lignecommande in commande.lignecommandes %}
+                    <li>{{ lignecommande.quantite }} x {{ lignecommande.article.nom }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        
+        
+        
+    </tr>
+{% endfor %}
